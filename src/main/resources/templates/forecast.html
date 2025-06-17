@@ -28,9 +28,29 @@
       <!-- メイン表示 -->
       <div class="main-content" id="mainContent">
          <h1>販売予測画面</h1>
-         <p>ここにコンテンツを書く</p>
+         <label for="date">発注日を選択:</label>
+         <select id="date"></select>
+
       </div>
    </div>
+   <script>
+      const select = document.getElementById("date");
+      const today = new Date();
+
+      // 未来7日分の中から月曜(1)と木曜(4)だけを追加
+      for (let i = 0; i < 10; i++) {
+         const d = new Date(today);
+         d.setDate(d.getDate() + i);
+         const day = d.getDay(); // 日曜=0, 月曜=1, ... 土曜=6
+
+         if (day === 1 || day === 4) { // 月曜または木曜
+            const option = document.createElement("option");
+            option.value = d.toISOString().split("T")[0];
+            option.text = d.toLocaleDateString("ja-JP", { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+            select.appendChild(option);
+         }
+      }
+   </script>
 </body>
 
 </html>
