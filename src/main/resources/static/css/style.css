@@ -1,0 +1,52 @@
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: "Yu Gothic", sans-serif;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 240px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 15px;
+            border-radius: 0 20px 20px 0;
+        }
+
+        .nav-box {
+            background-color: #a0d3ec;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-button {
+            color: #163E64;
+            padding: 10px;
+            font-size: 14px;
+            background-color: #46B1E1;
+            border: 0.5%;
+            border-color: #0B3041;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .nav-button:hover {
+            background-color: #8cc4e4;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 40px;
+        }
