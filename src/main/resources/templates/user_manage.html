@@ -1,100 +1,121 @@
-
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ユーザー管理</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <script th:src="@{/js/admin.js}" defer></script>
 </head>
+
 <body>
-
-
-<h2>ユーザー一覧</h2>
-<table border="1" id="userTable">
-<thead>
-<tr>
-<th>名前</th>
-<th>ステータス</th>
-<th>管理者権限</th>
-<th>メールアドレス</th>
-<th>パスワード</th>
-<th></th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
-<p><a href="#" onclick="openCreateModal()">アカウント新規作成＋</a></p>
-<!-- ▼ モーダル群 -->
-<!-- アカウント作成モーダル -->
-<div class="modal" id="createModal">
-<div class="modal-content">
-<h3>アカウント新規作成</h3>
-<label>名前：<input type="text" id="newName"></label>
-<label>管理者権限：
-<select id="newAdmin">
-<option value="あり">あり</option>
-<option value="なし">なし</option>
-</select>
-</label>
-<label>メールアドレス：<input type="email" id="newEmail"></label>
-<label>パスワード：<input type="password" id="newPassword"></label>
-<button onclick="closeModal('createModal')">戻る</button>
-<button onclick="addUser()">追加</button>
-</div>
-</div>
-<!-- 編集モーダル -->
-<div class="modal" id="editModal">
-<div class="modal-content">
-<h3 id="editTitle">情報編集</h3>
-<label>名前：<input type="text" id="editName"></label>
-<label>管理者権限：
-<select id="editAdmin">
-<option value="あり">あり</option>
-<option value="なし">なし</option>
-</select>
-</label>
-<label>メールアドレス：<input type="email" id="editEmail"></label>
-<label>ステータス：
-<select id="editStatus">
-<option value="在籍">在籍</option>
-<option value="休職中">休職中</option>
-<option value="退職">退職</option>
-</select>
-</label>
-<button onclick="closeModal('editModal')">戻る</button>
-<button onclick="updateUser()">変更</button>
-</div>
-</div>
-<!-- パスワード再設定モーダル -->
-<div class="modal" id="resetModal">
-<div class="modal-content">
-<h3 id="resetTitle">パスワード再設定</h3>
-<p>新しいパスワードを入力してください：</p>
-<input type="password" id="resetPw1">
-<p>もう一度入力してください：</p>
-<input type="password" id="resetPw2">
-<button onclick="closeModal('resetModal')">戻る</button>
-<button onclick="resetPassword()">再設定</button>
-</div>
-</div>
-<!-- パスワード完了モーダル -->
-<div class="modal" id="doneModal">
-<div class="modal-content">
-<h3 id="doneTitle">パスワード再設定</h3>
-<p>パスワードが変更できました。</p>
-<button onclick="closeModal('doneModal')">確認</button>
-</div>
-</div>
-<!-- ▼ JavaScript -->
-<script>
- let users = [];
- let editIndex = -1;
- let resetIndex = -1;
- function renderTable() {
-   const tbody = document.querySelector("#userTable tbody");
-   tbody.innerHTML = "";
-   users.forEach((u, i) => {
-     const row = `
+  <div class="container">
+    <!-- ナビゲーション -->
+    <div class="sidebar">
+      <p>管理者：<strong th:text="${name}">[Name]</strong>様</p>
+      <button class="nav-button" th:classappend="${activePage == 'forecast'} ? ' active' : ''"
+        onclick="location.href='/forecast'">発注予測</button>
+      <button class="nav-button" th:classappend="${activePage == 'user_manage'} ? ' active' : ''"
+        onclick="location.href='/user_manage'">ユーザー管理</button>
+      <button class="nav-button" th:classappend="${activePage == 'product_list'} ? ' active' : ''"
+        onclick="location.href='/product_list'">商品管理</button>
+      <button class="nav-button" th:classappend="${activePage == 'sale_input'} ? ' active' : ''"
+        onclick="location.href='/admin_sale_input'">販売実績入力</button>
+      <button class="nav-button" th:classappend="${activePage == 'calendar'} ? ' active' : ''"
+        onclick="location.href='/calendar'">販売実績一覧</button>
+    </div>
+    <!-- メイン表示 -->
+    <div class="main-content" id="mainContent">
+      <h1>ユーザー管理画面</h1>
+      <h2>ユーザー一覧</h2>
+      <table border="1" id="userTable">
+        <thead>
+          <tr>
+            <th>名前</th>
+            <th>ステータス</th>
+            <th>管理者権限</th>
+            <th>メールアドレス</th>
+            <th>パスワード</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <p><a href="#" onclick="openCreateModal()">アカウント新規作成＋</a></p>
+    </div>
+  </div>
+  <!-- ▼ モーダル群 -->
+  <!-- アカウント作成モーダル -->
+  <div class="modal" id="createModal">
+    <div class="modal-content">
+      <h3>アカウント新規作成</h3>
+      <label>名前：<input type="text" id="newName"></label>
+      <label>管理者権限：
+        <select id="newAdmin">
+          <option value="あり">あり</option>
+          <option value="なし">なし</option>
+        </select>
+      </label>
+      <label>メールアドレス：<input type="email" id="newEmail"></label>
+      <label>パスワード：<input type="password" id="newPassword"></label>
+      <button onclick="closeModal('createModal')">戻る</button>
+      <button onclick="addUser()">追加</button>
+    </div>
+  </div>
+  <!-- 編集モーダル -->
+  <div class="modal" id="editModal">
+    <div class="modal-content">
+      <h3 id="editTitle">情報編集</h3>
+      <label>名前：<input type="text" id="editName"></label>
+      <label>管理者権限：
+        <select id="editAdmin">
+          <option value="あり">あり</option>
+          <option value="なし">なし</option>
+        </select>
+      </label>
+      <label>メールアドレス：<input type="email" id="editEmail"></label>
+      <label>ステータス：
+        <select id="editStatus">
+          <option value="在籍">在籍</option>
+          <option value="休職中">休職中</option>
+          <option value="退職">退職</option>
+        </select>
+      </label>
+      <button onclick="closeModal('editModal')">戻る</button>
+      <button onclick="updateUser()">変更</button>
+    </div>
+  </div>
+  <!-- パスワード再設定モーダル -->
+  <div class="modal" id="resetModal">
+    <div class="modal-content">
+      <h3 id="resetTitle">パスワード再設定</h3>
+      <p>新しいパスワードを入力してください：</p>
+      <input type="password" id="resetPw1">
+      <p>もう一度入力してください：</p>
+      <input type="password" id="resetPw2">
+      <button onclick="closeModal('resetModal')">戻る</button>
+      <button onclick="resetPassword()">再設定</button>
+    </div>
+  </div>
+  <!-- パスワード完了モーダル -->
+  <div class="modal" id="doneModal">
+    <div class="modal-content">
+      <h3 id="doneTitle">パスワード再設定</h3>
+      <p>パスワードが変更できました。</p>
+      <button onclick="closeModal('doneModal')">確認</button>
+    </div>
+  </div>
+  <!-- ▼ JavaScript -->
+  <script>
+    let users = [];
+    let editIndex = -1;
+    let resetIndex = -1;
+    function renderTable() {
+      const tbody = document.querySelector("#userTable tbody");
+      tbody.innerHTML = "";
+      users.forEach((u, i) => {
+        const row = `
 <tr>
 <td>${u.name}</td>
 <td>${u.status}</td>
@@ -104,69 +125,70 @@
 <td><a href="#" onclick="openEditModal(${i})">編集</a></td>
 </tr>
      `;
-     tbody.innerHTML += row;
-   });
- }
- function openCreateModal() {
-   document.getElementById("createModal").style.display = "block";
- }
- function addUser() {
-   const name = document.getElementById("newName").value;
-   const admin = document.getElementById("newAdmin").value;
-   const email = document.getElementById("newEmail").value;
-   const pw = document.getElementById("newPassword").value;
-   users.push({ name, status: "在籍", admin, email, password: pw });
-   closeModal("createModal");
-   renderTable();
- }
- function openEditModal(index) {
-   editIndex = index;
-   const u = users[index];
-   document.getElementById("editTitle").textContent = `「${u.name}」情報編集`;
-   document.getElementById("editName").value = u.name;
-   document.getElementById("editAdmin").value = u.admin;
-   document.getElementById("editEmail").value = u.email;
-   document.getElementById("editStatus").value = u.status;
-   document.getElementById("editModal").style.display = "block";
- }
- function updateUser() {
-   const u = users[editIndex];
-   u.name = document.getElementById("editName").value;
-   u.admin = document.getElementById("editAdmin").value;
-   u.email = document.getElementById("editEmail").value;
-   u.status = document.getElementById("editStatus").value;
-   closeModal("editModal");
-   renderTable();
- }
- function openResetModal(index) {
-   resetIndex = index;
-   document.getElementById("resetTitle").textContent = `「${users[index].name}」のパスワード再設定`;
-   document.getElementById("resetPw1").value = "";
-   document.getElementById("resetPw2").value = "";
-   document.getElementById("resetModal").style.display = "block";
- }
- function resetPassword() {
-   const pw1 = document.getElementById("resetPw1").value;
-   const pw2 = document.getElementById("resetPw2").value;
-   if (pw1 && pw1 === pw2) {
-     users[resetIndex].password = pw1;
-     closeModal("resetModal");
-     document.getElementById("doneTitle").textContent = `「${users[resetIndex].name}」のパスワード再設定`;
-     document.getElementById("doneModal").style.display = "block";
-   } else {
-     alert("パスワードが一致しません");
-   }
- }
- function closeModal(id) {
-   document.getElementById(id).style.display = "none";
- }
- // 初期データ（空でもOK）
- users = [
-   { name: "スタッフA", status: "在籍", admin: "なし", email: "a@exa.com", password: "aaa" },
-   { name: "スタッフB", status: "在籍", admin: "なし", email: "b@exa.com", password: "bbb" }
- ];
- renderTable();
-</script>
+        tbody.innerHTML += row;
+      });
+    }
+    function openCreateModal() {
+      document.getElementById("createModal").style.display = "block";
+    }
+    function addUser() {
+      const name = document.getElementById("newName").value;
+      const admin = document.getElementById("newAdmin").value;
+      const email = document.getElementById("newEmail").value;
+      const pw = document.getElementById("newPassword").value;
+      users.push({ name, status: "在籍", admin, email, password: pw });
+      closeModal("createModal");
+      renderTable();
+    }
+    function openEditModal(index) {
+      editIndex = index;
+      const u = users[index];
+      document.getElementById("editTitle").textContent = `「${u.name}」情報編集`;
+      document.getElementById("editName").value = u.name;
+      document.getElementById("editAdmin").value = u.admin;
+      document.getElementById("editEmail").value = u.email;
+      document.getElementById("editStatus").value = u.status;
+      document.getElementById("editModal").style.display = "block";
+    }
+    function updateUser() {
+      const u = users[editIndex];
+      u.name = document.getElementById("editName").value;
+      u.admin = document.getElementById("editAdmin").value;
+      u.email = document.getElementById("editEmail").value;
+      u.status = document.getElementById("editStatus").value;
+      closeModal("editModal");
+      renderTable();
+    }
+    function openResetModal(index) {
+      resetIndex = index;
+      document.getElementById("resetTitle").textContent = `「${users[index].name}」のパスワード再設定`;
+      document.getElementById("resetPw1").value = "";
+      document.getElementById("resetPw2").value = "";
+      document.getElementById("resetModal").style.display = "block";
+    }
+    function resetPassword() {
+      const pw1 = document.getElementById("resetPw1").value;
+      const pw2 = document.getElementById("resetPw2").value;
+      if (pw1 && pw1 === pw2) {
+        users[resetIndex].password = pw1;
+        closeModal("resetModal");
+        document.getElementById("doneTitle").textContent = `「${users[resetIndex].name}」のパスワード再設定`;
+        document.getElementById("doneModal").style.display = "block";
+      } else {
+        alert("パスワードが一致しません");
+      }
+    }
+    function closeModal(id) {
+      document.getElementById(id).style.display = "none";
+    }
+    // 初期データ（空でもOK）
+    users = [
+      { name: "スタッフA", status: "在籍", admin: "なし", email: "a@exa.com", password: "aaa" },
+      { name: "スタッフB", status: "在籍", admin: "なし", email: "b@exa.com", password: "bbb" }
+    ];
+    renderTable();
+  </script>
 
 </body>
+
 </html>

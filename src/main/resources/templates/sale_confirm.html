@@ -1,72 +1,100 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>商品管理|確認画面</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <script th:src="@{/js/admin.js}" defer></script>
 </head>
+
 <body>
-  
-<h2>確認画面</h2>
-<!-- 日付表示 -->
-<p>日付：<span id="confirmDate"></span></p>
-<!-- 商品一覧テーブル -->
-<table id="confirmTable">
-<thead>
-<tr><th>商品名</th><th>本数</th><th>値段（円）</th></tr>
-</thead>
-<tbody></tbody>
-</table><br>
-<!-- 確定ボタン -->
-<button onclick="submitConfirm()">確定</button>
-<!-- 完了モーダル -->
-<div class="modal" id="doneModal">
-<div class="modal-content">
-<h3>本日の販売実績入力が完了しました。</h3>
-<button onclick="closeDoneModal()">確認</button>
-</div>
-</div>
-<script>
+  <div class="container">
+    <!-- ナビゲーション -->
+    <div class="sidebar">
+      <p>管理者：<strong th:text="${name}">[Name]</strong>様</p>
+      <button class="nav-button" th:classappend="${activePage == 'forecast'} ? ' active' : ''"
+        onclick="location.href='/forecast'">発注予測</button>
+      <button class="nav-button" th:classappend="${activePage == 'user_manage'} ? ' active' : ''"
+        onclick="location.href='/user_manage'">ユーザー管理</button>
+      <button class="nav-button" th:classappend="${activePage == 'product_list'} ? ' active' : ''"
+        onclick="location.href='/product_list'">商品管理</button>
+      <button class="nav-button" th:classappend="${activePage == 'sale_input'} ? ' active' : ''"
+        onclick="location.href='/admin_sale_input'">販売実績入力</button>
+      <button class="nav-button" th:classappend="${activePage == 'calendar'} ? ' active' : ''"
+        onclick="location.href='/calendar'">販売実績一覧</button>
+    </div>
+    <!-- メイン表示 -->
+    <div class="main-content" id="mainContent">
 
-  // セッションから日付と商品データを取得して表示
 
-  const dateStr = sessionStorage.getItem("selectedDate");
+      <h2>確認画面</h2>
+      <!-- 日付表示 -->
+      <p>日付：<span id="confirmDate"></span></p>
+      <!-- 商品一覧テーブル -->
+      <table id="confirmTable">
+        <thead>
+          <tr>
+            <th>商品名</th>
+            <th>本数</th>
+            <th>値段（円）</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table><br>
+      <!-- 確定ボタン -->
+      <button onclick="submitConfirm()">確定</button>
+    </div>
+  </div>
+  <!-- 完了モーダル -->
+  <div class="modal" id="doneModal">
+    <div class="modal-content">
+      <h3>本日の販売実績入力が完了しました。</h3>
+      <button onclick="closeDoneModal()">確認</button>
+    </div>
+  </div>
+  <script>
 
-  const products = JSON.parse(sessionStorage.getItem("products") || "[]");
+    // セッションから日付と商品データを取得して表示
 
-  document.getElementById("confirmDate").textContent = new Date(dateStr).toLocaleDateString("ja-JP", {
+    const dateStr = sessionStorage.getItem("selectedDate");
 
-    year: "numeric", month: "long", day: "numeric"
+    const products = JSON.parse(sessionStorage.getItem("products") || "[]");
 
-  });
+    document.getElementById("confirmDate").textContent = new Date(dateStr).toLocaleDateString("ja-JP", {
 
-  const tbody = document.querySelector("#confirmTable tbody");
+      year: "numeric", month: "long", day: "numeric"
 
-  products.forEach(item => {
+    });
 
-    const row = `<tr><td>${item.name}</td><td>${item.count}</td><td>${item.total}</td></tr>`;
+    const tbody = document.querySelector("#confirmTable tbody");
 
-    tbody.innerHTML += row;
+    products.forEach(item => {
 
-  });
+      const row = `<tr><td>${item.name}</td><td>${item.count}</td><td>${item.total}</td></tr>`;
 
-  // 確定ボタンでモーダルを表示
+      tbody.innerHTML += row;
 
-  function submitConfirm() {
+    });
 
-    document.getElementById("doneModal").style.display = "block";
+    // 確定ボタンでモーダルを表示
 
-  }
+    function submitConfirm() {
 
-  // 確認ボタンでモーダルを閉じる
+      document.getElementById("doneModal").style.display = "block";
 
-  function closeDoneModal() {
+    }
 
-    document.getElementById("doneModal").style.display = "none";
+    // 確認ボタンでモーダルを閉じる
 
-  }
-</script>
+    function closeDoneModal() {
+
+      document.getElementById("doneModal").style.display = "none";
+
+    }
+  </script>
 
 </body>
+
 </html>
- 
