@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  
+<h2>確認画面</h2>
+<!-- 日付表示 -->
+<p>日付：<span id="confirmDate"></span></p>
+<!-- 商品一覧テーブル -->
+<table id="confirmTable">
+<thead>
+<tr><th>商品名</th><th>本数</th><th>値段（円）</th></tr>
+</thead>
+<tbody></tbody>
+</table><br>
+<!-- 確定ボタン -->
+<button onclick="submitConfirm()">確定</button>
+<!-- 完了モーダル -->
+<div class="modal" id="doneModal">
+<div class="modal-content">
+<h3>本日の販売実績入力が完了しました。</h3>
+<button onclick="closeDoneModal()">確認</button>
+</div>
+</div>
+<script>
+
+  // セッションから日付と商品データを取得して表示
+
+  const dateStr = sessionStorage.getItem("selectedDate");
+
+  const products = JSON.parse(sessionStorage.getItem("products") || "[]");
+
+  document.getElementById("confirmDate").textContent = new Date(dateStr).toLocaleDateString("ja-JP", {
+
+    year: "numeric", month: "long", day: "numeric"
+
+  });
+
+  const tbody = document.querySelector("#confirmTable tbody");
+
+  products.forEach(item => {
+
+    const row = `<tr><td>${item.name}</td><td>${item.count}</td><td>${item.total}</td></tr>`;
+
+    tbody.innerHTML += row;
+
+  });
+
+  // 確定ボタンでモーダルを表示
+
+  function submitConfirm() {
+
+    document.getElementById("doneModal").style.display = "block";
+
+  }
+
+  // 確認ボタンでモーダルを閉じる
+
+  function closeDoneModal() {
+
+    document.getElementById("doneModal").style.display = "none";
+
+  }
+</script>
+
+</body>
+</html>
+ 

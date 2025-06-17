@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>一般ユーザー画面</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+<!-- ナビゲーション -->
+<div class="sidebar">
+<button class="nav-button">販売実績入力</button>
+</div>
+<!-- メイン表示 -->
+<div class="main-content">
+<p><span id="userName">[Name]</span>様、発注予測システムへようこそ。</p>
+</div>
+</div>
+<script>
+   // 仮のログイン名（本来はログイン時のデータを使って取得）
+   const loginUserName = "田中";  // ここをログイン者名に動的に置き換え
+   // HTMLに反映
+   document.getElementById("userName").textContent = loginUserName;
+</script>
+</body>
+</html>

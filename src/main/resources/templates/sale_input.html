@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  
+<h2>販売実績入力</h2>
+<!-- 日付選択 -->
+<label>日付選択：
+<input type="date" id="inputDate">
+</label><br><br>
+<!-- 商品と本数 -->
+<label>商品名：
+<input list="products" id="productName">
+<datalist id="products">
+<option value="ビールA">
+<option value="ビールB">
+<option value="ビールC">
+<option value="ビールD">
+</datalist>
+</label>
+<label>本数：
+<input type="number" id="productCount" min="1">
+</label>
+<button onclick="addProduct()">追加</button>
+<!-- 表 -->
+<table border="1" id="productTable">
+<thead>
+<tr><th>商品名</th><th>本数</th><th>値段（円）</th></tr>
+</thead>
+<tbody></tbody>
+</table><br>
+<button onclick="goToConfirm()">確認画面へ</button>
+<script>
+ const unitPrices = {
+   "ビールA": 700,
+   "ビールB": 700,
+   "ビールC": 700,
+   "ビールD": 700
+ };
+ const dataStore = [];
+ function addProduct() {
+   const name = document.getElementById("productName").value;
+   const count = parseInt(document.getElementById("productCount").value);
+   const price = unitPrices[name] || 0;
+   const total = count * price;
+   if (!name || !count || count <= 0) return;
+   dataStore.push({ name, count, total });
+   const row = `<tr><td>${name}</td><td>${count}</td><td>${total}</td></tr>`;
+   document.querySelector("#productTable tbody").innerHTML += row;
+   // 入力クリア
+   document.getElementById("productName").value = "";
+   document.getElementById("productCount").value = "";
+ }
+ function goToConfirm() {
+   const date = document.getElementById("inputDate").value;
+   sessionStorage.setItem("selectedDate", date);
+   sessionStorage.setItem("products", JSON.stringify(dataStore));
+   fetch("confirm.html")
+     .then(res => res.text())
+     .then(html => {
+       document.getElementById("mainContent").innerHTML = html;
+     });
+ }
+</script>
+
+</body>
+</html>
