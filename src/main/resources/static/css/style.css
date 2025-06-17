@@ -4,6 +4,7 @@
             padding: 0;
             height: 100%;
             font-family: "Yu Gothic", sans-serif;
+            font-size:large;
         }
 
         .container {
@@ -12,29 +13,22 @@
         }
 
         .sidebar {
-            width: 240px;
+            width: 15%;
+            background-color: #a0d3ec;
+            padding: 20px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
             display: flex;
-            justify-content: center;
-            align-items: center;
+            /* justify-content: center; */
+            /* align-items: center; */
             flex-direction: column;
             gap: 15px;
             border-radius: 0 20px 20px 0;
         }
 
-        .nav-box {
-            background-color: #a0d3ec;
-            border-radius: 10px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-        }
-
         .nav-button {
             color: #163E64;
             padding: 10px;
-            font-size: 14px;
+            font-size:larger;
             background-color: #46B1E1;
             border: 0.5%;
             border-color: #0B3041;
