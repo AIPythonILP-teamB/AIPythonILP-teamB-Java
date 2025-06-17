@@ -1,4 +1,4 @@
-package com.handcbar.myproject.model;
+package com.example.hcbar_project.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

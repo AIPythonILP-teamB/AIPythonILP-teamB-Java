@@ -1,6 +1,6 @@
-package com.handcbar.myproject.repository;
+package com.example.hcbar_project.repository;
 
-import com.handcbar.myproject.model.User;
+import com.example.hcbar_project.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {

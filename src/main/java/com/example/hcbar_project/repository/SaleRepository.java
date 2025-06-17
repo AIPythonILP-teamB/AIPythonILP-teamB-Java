@@ -1,7 +1,7 @@
-package com.handcbar.myproject.repository;
+package com.example.hcbar_project.repository;
 
 import java.util.*;
-import com.handcbar.myproject.model.Sale;
+import com.example.hcbar_project.model.Sale;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SaleRepository extends JpaRepository<Sale, Long> {
