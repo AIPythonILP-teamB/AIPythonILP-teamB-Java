@@ -16,7 +16,6 @@ import com.example.hcbar_project.service.SaleService;
 import com.example.hcbar_project.service.ProductService;
 
 @Controller
-@RequestMapping("/sales")
 @SessionAttributes({"sale", "sales", "saleDate"})
 public class SaleController {
 
@@ -24,7 +23,7 @@ public class SaleController {
     @Autowired private ProductService productService;
 
     /** ① 入力画面表示 */
-    @GetMapping("/input")
+    @GetMapping("/admin_sale_input")
     public String showInput(Model model,
                             @RequestParam(required = false) Boolean completed) {
         // フォーム用の空オブジェクト
@@ -38,7 +37,7 @@ public class SaleController {
         // 商品マスタ一覧
         model.addAttribute("products", productService.listAll());
         model.addAttribute("completed", completed == Boolean.TRUE);
-        return "sale_input";
+        return "admin_sale_input";
     }
 
     /** ② 「追加」→ 入力行をセッションリストに積む */
