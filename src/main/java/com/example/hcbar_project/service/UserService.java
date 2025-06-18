@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-     @Autowired
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
@@ -26,7 +26,7 @@ public class UserService {
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(rawPassword));
         user.setRole("USER"); // 管理者が作るユーザーは通常ユーザー
-        user.isActive(true);
+        user.setActive(true);
 
         userRepository.save(user);
     }

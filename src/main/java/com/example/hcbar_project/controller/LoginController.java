@@ -22,6 +22,7 @@ public class LoginController {
     // ログアウト処理(/logout)
     // 管理者がユーザー登録(/register)、パスワード再設定(/reset-password)
 
+    
 
    @GetMapping("/login")
     public String login(@RequestParam(value = "error", required = false) String error,

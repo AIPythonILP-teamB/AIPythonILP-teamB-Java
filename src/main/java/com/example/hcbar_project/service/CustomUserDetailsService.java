@@ -17,20 +17,20 @@ import java.util.Optional;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-    
+
     @Autowired
     private UserRepository userRepository;
-    
-   @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-    User user = userRepository.findByEmail(email)
-         .orElseThrow(() -> new UsernameNotFoundException("ユーザーが見つかりません: " + email));
 
-    return new org.springframework.security.core.userdetails.User(
-        user.getEmail(),
-        user.getPassword(),
-        AuthorityUtils.createAuthorityList("ROLE_" + user.getRole())
-    );
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("ユーザーが見つかりません: " + email));
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(),
+                user.getPassword(),
+                AuthorityUtils.createAuthorityList("ROLE_" + user.getRole().toUpperCase()) // ★ここを修正
+        );
     }
-    
+
 }
