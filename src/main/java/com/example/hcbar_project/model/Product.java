@@ -21,4 +21,6 @@ public class Product {
 
     @Column(name = "is_deleted")
     private Boolean isDeleted = false;
+
+    
 }

@@ -7,6 +7,10 @@
   <title>販売実績一覧</title>
   <link rel="stylesheet" th:href="@{/css/style.css}">
   <script th:src="@{/js/admin.js}" defer></script>
+  <!-- FullCalendar CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+  <!-- FullCalendar JS -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 </head>
 
 <body>
@@ -26,116 +30,32 @@
         onclick="location.href='/calendar'">販売実績一覧</button>
     </div>
     <!-- メイン表示 -->
-    <div class="main-content" id="mainContent">
+    <div class="calendar-detail-wrapper">
       <h1>販売実績一覧画面</h1>
-      <p>ここにコンテンツを書く</p>
-
-
-
-
-      <h2 id="calendarTitle">2025年6月</h2>
-      <div>
-        <button onclick="changeMonth(-1)">←</button>
-        <button onclick="changeMonth(1)">→</button>
-      </div>
       <!-- カレンダー -->
-      <table border="1" id="calendar">
-        <thead>
-          <tr>
-            <th>月</th>
-            <th>火</th>
-            <th>水</th>
-            <th>木</th>
-            <th>金</th>
-            <th>土</th>
-            <th>日</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+      <div id="calendar-area"></div>
+    </div>
+
+    <!-- モーダル詳細画面 -->
+    <div class="modal" id="detailModal">
+      <div class="modal-content">
+        <h3 id="modalDate"></h3>
+        <div id="weatherIcon"></div>
+        <p id="weatherInfo"></p>
+        <p id="totalSales"></p>
+        <table>
+          <thead>
+            <tr>
+              <th>商品名</th>
+              <th>販売本数</th>
+            </tr>
+          </thead>
+          <tbody id="productSales"></tbody>
+        </table>
+        <button onclick="closeModal()">戻る</button>
+      </div>
     </div>
   </div>
-  <!-- モーダル詳細画面 -->
-  <div class="modal" id="detailModal">
-    <div class="modal-content">
-      <h3 id="modalDate">日付詳細</h3>
-      <div id="weatherIcon">☀️</div>
-      <p id="weatherInfo">気温：29/21　風速：3m/s</p>
-      <p id="totalSales">販売本数：500本</p>
-      <table border="1">
-        <thead>
-          <tr>
-            <th>商品名</th>
-            <th>販売本数</th>
-          </tr>
-        </thead>
-        <tbody id="productSales"></tbody>
-      </table>
-      <br>
-      <button onclick="closeModal()">戻る</button>
-    </div>
-  </div>
-  <script>
-    let currentYear = 2025;
-    let currentMonth = 5; // 0 = Jan, 5 = June
-    function renderCalendar() {
-      const title = document.getElementById("calendarTitle");
-      title.textContent = `${currentYear}年${currentMonth + 1}月`;
-      const tbody = document.querySelector("#calendar tbody");
-      tbody.innerHTML = "";
-      const first = new Date(currentYear, currentMonth, 1);
-      const last = new Date(currentYear, currentMonth + 1, 0);
-      const startDay = first.getDay();
-      const daysInMonth = last.getDate();
-      let row = "<tr>";
-      for (let i = 0; i < startDay; i++) {
-        row += "<td></td>";
-      }
-      for (let date = 1; date <= daysInMonth; date++) {
-        const fullDate = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
-        row += `<td onclick="openDetail('${fullDate}')">${date}<br>☁️<br>***本</td>`;
-        if ((startDay + date) % 7 === 0) {
-          row += "</tr><tr>";
-        }
-      }
-      row += "</tr>";
-      tbody.innerHTML = row;
-    }
-    function changeMonth(delta) {
-      currentMonth += delta;
-      if (currentMonth < 0) {
-        currentMonth = 11;
-        currentYear--;
-      } else if (currentMonth > 11) {
-        currentMonth = 0;
-        currentYear++;
-      }
-      renderCalendar();
-    }
-    function openDetail(date) {
-      document.getElementById("modalDate").textContent = `${date} の詳細情報`;
-      // ダミーデータ（後でPythonやJavaと連携）
-      document.getElementById("weatherIcon").textContent = "🌤️";
-      document.getElementById("weatherInfo").textContent = "気温：29/21　風速：3m/s";
-      document.getElementById("totalSales").textContent = "販売本数：500本";
-      const tbody = document.getElementById("productSales");
-      tbody.innerHTML = `
-<tr><td>ビールA</td><td>80</td></tr>
-<tr><td>ビールB</td><td>90</td></tr>
-<tr><td>ビールC</td><td>60</td></tr>
-<tr><td>ビールD</td><td>50</td></tr>
-<tr><td>ビールE</td><td>40</td></tr>
-<tr><td>ビールF</td><td>30</td></tr>
-<tr><td>ビールG</td><td>25</td></tr>
-<tr><td>小計</td><td>10</td></tr>
-   `;
-      document.getElementById("detailModal").style.display = "block";
-    }
-    function closeModal() {
-      document.getElementById("detailModal").style.display = "none";
-    }
-    renderCalendar();
-  </script>
 
 </body>
 
