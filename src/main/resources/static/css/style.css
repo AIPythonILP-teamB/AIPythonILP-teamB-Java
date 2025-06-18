@@ -1,0 +1,56 @@
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: "Helvetica Neue",
+                Arial,
+                "Hiragino Kaku Gothic ProN",
+                "Hiragino Sans",
+                Meiryo,
+                sans-serif;
+            font-size: large;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #a0d3ec;
+            padding: 20px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            border-radius: 0 20px 20px 0;
+        }
+
+        .nav-button {
+            color: #ffff;
+            padding: 10px;
+            font-size: larger;
+            background-color: #46B1E1;
+            border: 0.5%;
+            border-color: #0B3041;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .nav-button:hover {
+            background-color: #8cc4e4;
+        }
+
+        /* 現在のページの色 */
+        .nav-button.active {
+            background-color: #0B3041;
+            font-weight: bold;
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 40px;
+        }

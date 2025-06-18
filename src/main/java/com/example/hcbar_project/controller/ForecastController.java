@@ -5,8 +5,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class LoginController {
-    // ログインフォームの表示
-    // ログイン認証
-    // ログアウト処理
+public class ForecastController {
+
+    @GetMapping("/forecast")
+    public String showForecast(Model model) {
+        model.addAttribute("activePage", "forecast");
+        return "forecast";
+    }
 }
