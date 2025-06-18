@@ -40,6 +40,7 @@ public class SaleController {
         return "admin_sale_input";
     }
 
+    // エラーメモ：画面上の表追加せずに画面遷移してるからおかしい
     /** ② 「追加」→ 入力行をセッションリストに積む */
     @PostMapping("/add")
     public String addRow(@ModelAttribute("sale") Sale sale,

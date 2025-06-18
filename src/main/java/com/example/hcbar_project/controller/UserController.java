@@ -15,4 +15,5 @@ public class UserController {
         model.addAttribute("activePage", "user_manage");
         return "user_manage"; // user_manage.html
     }
+    
 }
