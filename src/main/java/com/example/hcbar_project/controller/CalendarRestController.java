@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -26,12 +27,16 @@ public class CalendarRestController {
     // ① カレンダーに表示するイベント一覧（1ヶ月分など）
     @GetMapping("/events")
     public List<Map<String, Object>> getCalendarEvents(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+            @RequestParam String start,
+            @RequestParam String end) {
 
-        // 該当範囲の販売データと天気を取得
-        List<Weather> weathers = weatherRepository.findByDateBetween(start, end);
-        List<Sale> sales = saleRepository.findBySaleDateBetween(start, end);
+        // 文字列からLocalDateを抽出（先頭10文字だけ使う）
+        LocalDate startDate = LocalDate.parse(start.substring(0, 10));
+        LocalDate endDate = LocalDate.parse(end.substring(0, 10));
+
+        // 該当範囲のデータ取得
+        List<Weather> weathers = weatherRepository.findByDateBetween(startDate, endDate);
+        List<Sale> sales = saleRepository.findBySaleDateBetween(startDate, endDate);
 
         // 日付ごとの販売本数を集計
         Map<LocalDate, Integer> salesPerDate = sales.stream()
@@ -39,15 +44,16 @@ public class CalendarRestController {
                         Sale::getSaleDate,
                         Collectors.summingInt(Sale::getQuantity)));
 
-        // 日付ごとにイベントを作成
+        // イベント生成
         List<Map<String, Object>> result = new ArrayList<>();
         for (Weather w : weathers) {
             LocalDate date = w.getDate();
             int totalSales = salesPerDate.getOrDefault(date, 0);
-            String title = w.getWeatherMain() + "\n" + totalSales + "本";
             result.add(Map.of(
-                    "title", title,
-                    "start", date.toString()));
+                    "title", totalSales + "本", // タイトルを販売数だけにするなど
+                    "start", date.toString(),
+                    "icon", w.getIcon() // ← OpenWeatherMapのアイコンコード（例: "01d"）
+            ));
         }
 
         return result;
@@ -60,6 +66,10 @@ public class CalendarRestController {
 
         Weather w = weatherRepository.findByDate(date);
         List<Sale> sales = saleRepository.findBySaleDate(date);
+
+        if (w == null || sales == null || sales.isEmpty()) {
+            return Map.of(); // 空のオブジェクトを返す
+        }
 
         int total = sales.stream().mapToInt(Sale::getQuantity).sum();
 
