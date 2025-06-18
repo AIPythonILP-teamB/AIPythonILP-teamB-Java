@@ -3,6 +3,7 @@ package com.example.hcbar_project.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class AdminController {
@@ -14,4 +15,13 @@ public class AdminController {
         model.addAttribute("name", adminName);
         return "admin"; // templates/admin.html を返す
     }
+
+    // 管理者用の機能（例：ユーザー管理、アカウント権限変更、ダッシュボード等）
+
+   //消すかも
+     @GetMapping("/home")
+        public String adminHome() {
+            return "admin_home"; // admin_home.html
+        }
+    
 }

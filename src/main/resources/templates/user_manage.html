@@ -49,6 +49,7 @@
   <!-- アカウント作成モーダル -->
   <div class="modal" id="createModal">
     <div class="modal-content">
+      <form method="post" action="/admin/signup">
       <h3>アカウント新規作成</h3>
       <label>名前：<input type="text" id="newName"></label>
       <label>管理者権限：
@@ -62,6 +63,7 @@
       <button onclick="closeModal('createModal')">戻る</button>
       <button onclick="addUser()">追加</button>
     </div>
+  </form>
   </div>
   <!-- 編集モーダル -->
   <div class="modal" id="editModal">
