@@ -15,15 +15,22 @@ public class ProductService {
     private ProductRepository productRepository;
 
     public List<Product> getAllProducts() {
-        return productRepository.findByIsDeletedFalse();
+        return productRepository.findByIsDeletedFalseOrderByIdAsc();
     }
 
     public Optional<Product> getProductById(Long id) {
         return productRepository.findById(id);
     }
 
-    public void saveProduct(Product product) {
-        product.setIsDeleted(false);  // 常にfalseで登録
-        productRepository.save(product);
+    public Product saveProduct(Product product) {
+        product.setIsDeleted(false); // 常にfalseで登録
+        return productRepository.save(product);
+    }
+
+    public void deleteProduct(Long id) {
+        productRepository.findById(id).ifPresent(product -> {
+            product.setIsDeleted(true);
+            productRepository.save(product);
+        });
     }
 }

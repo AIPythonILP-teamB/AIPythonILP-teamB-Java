@@ -55,6 +55,9 @@
       <label>商品名：<input type="text" id="addName"></label>
       <label>価格：<input type="number" id="addPrice"></label>
       <label>JANコード：<input type="text" id="addJan"></label>
+
+      <p id="addError" style="color: red;"></p>
+
       <button onclick="closeModal('addModal')">戻る</button>
       <button onclick="addProduct()">追加</button>
     </div>
@@ -67,73 +70,14 @@
       <label>商品名：<input type="text" id="editName"></label>
       <label>価格：<input type="number" id="editPrice"></label>
       <label>JANコード：<input type="text" id="editJan"></label>
+
+      <p id="editError" style="color: red;"></p>
+
       <button onclick="closeModal('editModal')">戻る</button>
       <button onclick="updateProduct()">変更</button>
+      <button onclick="deleteProductFromModal()">削除</button>
     </div>
   </div>
-  <script>
-    let products = [];
-    let editIndex = -1;
-    function renderTable() {
-      const tbody = document.querySelector("#productTable tbody");
-      tbody.innerHTML = "";
-      products.forEach((p, i) => {
-        const row = `
-<tr>
-<td>${p.id}</td>
-<td>${p.name}</td>
-<td>${p.price}</td>
-<td>${p.jan}</td>
-<td><a href="#" onclick="openEditModal(${i})">編集</a></td>
-</tr>
-     `;
-        tbody.innerHTML += row;
-      });
-    }
-    function openAddModal() {
-      document.getElementById("addId").value = "";
-      document.getElementById("addName").value = "";
-      document.getElementById("addPrice").value = "";
-      document.getElementById("addJan").value = "";
-      document.getElementById("addModal").style.display = "block";
-    }
-    function addProduct() {
-      const id = document.getElementById("addId").value;
-      const name = document.getElementById("addName").value;
-      const price = document.getElementById("addPrice").value;
-      const jan = document.getElementById("addJan").value;
-      products.push({ id, name, price, jan });
-      closeModal("addModal");
-      renderTable();
-    }
-    function openEditModal(index) {
-      editIndex = index;
-      const p = products[index];
-      document.getElementById("editId").value = p.id;
-      document.getElementById("editName").value = p.name;
-      document.getElementById("editPrice").value = p.price;
-      document.getElementById("editJan").value = p.jan;
-      document.getElementById("editModal").style.display = "block";
-    }
-    function updateProduct() {
-      const p = products[editIndex];
-      p.id = document.getElementById("editId").value;
-      p.name = document.getElementById("editName").value;
-      p.price = document.getElementById("editPrice").value;
-      p.jan = document.getElementById("editJan").value;
-      closeModal("editModal");
-      renderTable();
-    }
-    function closeModal(id) {
-      document.getElementById(id).style.display = "none";
-    }
-    // 初期表示用ダミーデータ
-    products = [
-      { id: "PROD0001", name: "ビールA", price: 800, jan: "1234567890" },
-      { id: "PROD0002", name: "ビールB", price: 950, jan: "2345678901" }
-    ];
-    renderTable();
-  </script>
 
 </body>
 
