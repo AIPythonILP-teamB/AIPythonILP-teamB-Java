@@ -58,6 +58,7 @@
             padding: 40px;
         }
 
+
 /* ================[modal]=============== */
         .modal {
             display: none;
@@ -219,4 +220,15 @@
 
         .modal-button.danger:hover {
             background-color: #b30000;
+
+        .logout-link {
+            color: #003344;
+            text-decoration: underline;
+            margin-top: auto;
+            cursor: pointer;
+        }
+
+        .logout-link:hover {
+            color: #008fbe;
+
         }

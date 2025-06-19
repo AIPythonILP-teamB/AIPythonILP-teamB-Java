@@ -21,10 +21,12 @@
       <button class="nav-button" th:classappend="${activePage == 'product_list'} ? ' active' : ''"
         onclick="location.href='/product_list'">商品管理</button>
       <button class="nav-button" th:classappend="${activePage == 'sale_input'} ? ' active' : ''"
-        onclick="location.href='/admin_sale_input'">販売実績入力</button>
+        onclick="location.href='/admin/sale/input'">販売実績入力</button>
       <button class="nav-button" th:classappend="${activePage == 'calendar'} ? ' active' : ''"
         onclick="location.href='/calendar'">販売実績一覧</button>
-    </div>
+      <a class="logout-link" href="#" onclick="document.getElementById('logoutForm').submit(); return false;">ログアウト</a>    </div>
+    <form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;"></form>
+
     <!-- メイン表示 -->
     <div class="main-content" id="mainContent">
       <h1>販売実績一覧画面</h1>
