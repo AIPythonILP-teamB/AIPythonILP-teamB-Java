@@ -14,8 +14,6 @@ import com.example.hcbar_project.model.Sale;
 import com.example.hcbar_project.service.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-
 @Controller
 @RequestMapping("/admin/sale")
 @SessionAttributes({ "adminSales", "adminSaleDate" })

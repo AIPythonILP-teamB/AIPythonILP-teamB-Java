@@ -6,18 +6,14 @@ import java.time.LocalDate;
 
 import java.util.*;
 
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface WeatherRepository extends JpaRepository<Weather, Long> {
     // 日付で天気を取得
-  
-  
-//これは競合するのか？
+
+    // これは競合するのか？
     Optional<Weather> findByDate(LocalDate date);
-    Weather findByDate(LocalDate date);
 
     List<Weather> findByDateBetween(LocalDate start, LocalDate end);
 
- 
 }

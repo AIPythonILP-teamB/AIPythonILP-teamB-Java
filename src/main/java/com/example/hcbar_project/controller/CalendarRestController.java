@@ -7,7 +7,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -21,8 +20,6 @@ public class CalendarRestController {
     @Autowired
     private WeatherRepository weatherRepository;
 
-    @Autowired
-    private ProductRepository productRepository;
 
     // ① カレンダーに表示するイベント一覧（1ヶ月分など）
     @GetMapping("/events")
@@ -64,12 +61,15 @@ public class CalendarRestController {
     public Map<String, Object> getDetailByDate(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
 
-        Weather w = weatherRepository.findByDate(date);
+        Optional<Weather> optionalWeather = weatherRepository.findByDate(date);
         List<Sale> sales = saleRepository.findBySaleDate(date);
 
-        if (w == null || sales == null || sales.isEmpty()) {
+        // nullやデータなしの場合に備える
+        if (optionalWeather.isEmpty() || sales == null || sales.isEmpty()) {
             return Map.of(); // 空のオブジェクトを返す
         }
+
+        Weather w = optionalWeather.get(); // 必ず存在している前提で取り出す
 
         int total = sales.stream().mapToInt(Sale::getQuantity).sum();
 

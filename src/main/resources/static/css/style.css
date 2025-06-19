@@ -15,11 +15,11 @@
         .container {
             display: flex;
             height: 100vh;
-            overflow: hidden;
+            overflow-y: hidden;
             /* ← はみ出しを防ぐ */
         }
 
-/* ================[Navigation]=============== */
+        /* ================[Navigation]=============== */
         .sidebar {
             width: 200px;
             background-color: #a0d3ec;
@@ -58,9 +58,9 @@
         .main-content {
             flex: 1;
             padding: 40px;
-
             height: 100vh;
             box-sizing: border-box;
+            overflow-y: auto;
         }
 
         .fc-header-toolbar,
@@ -109,7 +109,7 @@
         }
 
 
-/* ================[modal]=============== */
+        /* ================[modal]=============== */
         .modal {
             display: none;
             position: fixed;
@@ -171,7 +171,7 @@
 
 
 
-/* ================[Product Table]=============== */
+        /* ================[Product Table]=============== */
         #productTable {
             width: 100%;
             max-width: 800px;
@@ -231,7 +231,7 @@
 
 
 
-/* ================[modal button]=============== */
+        /* ================[modal button]=============== */
         .modal-button {
             padding: 10px 18px;
             font-size: 16px;
@@ -270,6 +270,7 @@
 
         .modal-button.danger:hover {
             background-color: #b30000;
+        }
 
         .logout-link {
             color: #003344;
@@ -280,5 +281,4 @@
 
         .logout-link:hover {
             color: #008fbe;
-
         }
