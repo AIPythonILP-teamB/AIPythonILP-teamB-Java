@@ -1,0 +1,94 @@
+
+.body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: "Helvetica Neue",
+                Arial,
+                "Hiragino Kaku Gothic ProN",
+                "Hiragino Sans",
+                Meiryo,
+                sans-serif;
+            font-size: large;
+            background-color: #a0d3ec;
+ }
+
+ .login-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* モーダルウィンドウの基本スタイル */
+.modal {
+  display: none; /* デフォルトでは非表示に設定 */
+  position: fixed; /* モーダルがページ全体に固定されるように設定 */
+  top: 0; /* ページの最上部からスタート */
+  left: 0; /* ページの最左端からスタート */
+  width: 100%; /* モーダルが画面全体の幅を占める */
+  height: 100%; /* モーダルが画面全体の高さを占める */
+  background-color: rgba(0, 0, 0, 0.4); /* 背景を半透明の黒に設定（モーダルの背後が見えるように） */
+}
+
+.modal-content {
+  position: fixed; /* モーダル内容が画面上に固定されるように設定 */
+  top: 50%; /* 縦方向の中央に配置 */
+  left: 50%; /* 横方向の中央に配置 */
+  transform: translate(-50%, -50%); /* 完全に中央に配置するための補正 */
+  padding: 20px; /* モーダル内の余白を設定 */
+  width: 300px; /* モーダルの幅 */
+  height: 60px; /* モーダルの高さ */
+  background-color: #fefefe; /* モーダルの背景色を白に設定 */
+  border: 1px solid #888; /* 境界線の色を薄いグレーに設定 */
+  border-radius: 10px; /* モーダルの角を丸くするための半径 */
+}
+
+/* モーダルを閉じるボタン（×）のスタイル */
+#closeModal {
+  position: absolute; /* モーダル内で絶対位置に配置 */
+  display: flex; /* ボタン内のテキストが中央に配置されるようにフレックスボックスを使用 */
+  align-items: center; /* ボタン内のテキストを縦方向に中央揃え */
+  justify-content: center; /* ボタン内のテキストを横方向に中央揃え */
+  top: -30%; /* モーダル内容の上部から離れた位置に配置 */
+  right: -10%; /* モーダル内容の右端から離れた位置に配置 */
+  font-size: 28px; /* 閉じるボタンのフォントサイズ */
+  font-weight: bold; /* 閉じるボタンのフォントを太字に設定 */
+  cursor: pointer; /* ホバー時にポインタが表示されるように設定 */
+  color: #FFF; /* 閉じるボタンのテキストカラーを白に設定 */
+  width: 40px; /* ボタンの幅 */
+  height: 40px; /* ボタンの高さ */
+  background-color: #333; /* ボタンの背景色をダークグレーに設定 */
+  border: #333; /* ボタンの境界線を背景と同じ色に設定 */
+  border-radius: 50%; /* ボタンを丸くするための半径 */
+}

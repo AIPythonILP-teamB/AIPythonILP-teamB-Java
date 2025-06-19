@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class UserController {
 
+
     @Autowired
     private UserService userService;
+
 
     /** ユーザー一覧表示 */
     @GetMapping("/user_manage")
@@ -21,6 +23,7 @@ public class UserController {
         model.addAttribute("activePage", "user_manage");
         return "user_manage";  // resources/templates/user_manage.html
     }
+
 
     /** 新規ユーザー追加フォーム表示 */
     @GetMapping("/user/add")
@@ -50,3 +53,19 @@ public class UserController {
         return "redirect:/user_manage";
     }
 }
+
+
+    @GetMapping("/user/home")
+    public String userHome() {
+        return "user"; // user.html
+    }
+
+    @GetMapping("/sale_input")
+    public String showAdminSaleInput(Model model) {
+        model.addAttribute("activePage", "sale_input");
+        return "sale_input"; // admin_sale_input.html
+    }
+
+}
+
+

@@ -21,21 +21,19 @@
       <button class="nav-button" th:classappend="${activePage == 'product_list'} ? ' active' : ''"
         onclick="location.href='/product_list'">商品管理</button>
       <button class="nav-button" th:classappend="${activePage == 'sale_input'} ? ' active' : ''"
-        onclick="location.href='/admin_sale_input'">販売実績入力</button>
+        onclick="location.href='/admin/sale/input'">販売実績入力</button>
       <button class="nav-button" th:classappend="${activePage == 'calendar'} ? ' active' : ''"
         onclick="location.href='/calendar'">販売実績一覧</button>
-    </div>
+      <a class="logout-link" href="#" onclick="document.getElementById('logoutForm').submit(); return false;">ログアウト</a>    </div>
+    <form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;"></form>
+
     <!-- メイン表示 -->
     <div class="main-content" id="mainContent">
       <h1>商品管理画面</h1>
-      <p>ここにコンテンツを書く</p>
-
-
       <h2>商品一覧</h2>
-      <table border="1" id="productTable">
+      <table id="productTable">
         <thead>
           <tr>
-            <th>商品ID</th>
             <th>商品名</th>
             <th>価格</th>
             <th>JANコード</th>
@@ -51,31 +49,30 @@
   <div class="modal" id="addModal">
     <div class="modal-content">
       <h3>商品追加</h3>
-      <label>商品ID：<input type="text" id="addId"></label>
       <label>商品名：<input type="text" id="addName"></label>
       <label>価格：<input type="number" id="addPrice"></label>
       <label>JANコード：<input type="text" id="addJan"></label>
 
       <p id="addError" style="color: red;"></p>
 
-      <button onclick="closeModal('addModal')">戻る</button>
-      <button onclick="addProduct()">追加</button>
+      <button class="modal-button cancel" onclick="closeModal('addModal')">戻る</button>
+      <button class="modal-button confirm" onclick="addProduct()">追加</button>
+
     </div>
   </div>
   <!-- 商品編集モーダル -->
   <div class="modal" id="editModal">
     <div class="modal-content">
       <h3>商品編集</h3>
-      <label>商品ID：<input type="text" id="editId"></label>
       <label>商品名：<input type="text" id="editName"></label>
       <label>価格：<input type="number" id="editPrice"></label>
       <label>JANコード：<input type="text" id="editJan"></label>
 
       <p id="editError" style="color: red;"></p>
 
-      <button onclick="closeModal('editModal')">戻る</button>
-      <button onclick="updateProduct()">変更</button>
-      <button onclick="deleteProductFromModal()">削除</button>
+      <button class="modal-button cancel" onclick="closeModal('editModal')">戻る</button>
+      <button class="modal-button confirm" onclick="updateProduct()">変更</button>
+      <button class="modal-button danger" onclick="deleteProductFromModal()">削除</button>
     </div>
   </div>
 
