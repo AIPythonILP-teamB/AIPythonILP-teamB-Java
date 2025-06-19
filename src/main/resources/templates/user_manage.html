@@ -21,10 +21,14 @@
       <button class="nav-button" th:classappend="${activePage == 'product_list'} ? ' active' : ''"
         onclick="location.href='/product_list'">商品管理</button>
       <button class="nav-button" th:classappend="${activePage == 'sale_input'} ? ' active' : ''"
-        onclick="location.href='/admin_sale_input'">販売実績入力</button>
+        onclick="location.href='/admin/sale/input'">販売実績入力</button>
       <button class="nav-button" th:classappend="${activePage == 'calendar'} ? ' active' : ''"
         onclick="location.href='/calendar'">販売実績一覧</button>
+      <a class="logout-link" href="#" onclick="document.getElementById('logoutForm').submit(); return false;">ログアウト</a>
+
     </div>
+    <form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;"></form>
+
     <!-- メイン表示 -->
     <div class="main-content" id="mainContent">
       <h1>ユーザー管理画面</h1>
@@ -49,19 +53,21 @@
   <!-- アカウント作成モーダル -->
   <div class="modal" id="createModal">
     <div class="modal-content">
-      <h3>アカウント新規作成</h3>
-      <label>名前：<input type="text" id="newName"></label>
-      <label>管理者権限：
-        <select id="newAdmin">
-          <option value="あり">あり</option>
-          <option value="なし">なし</option>
-        </select>
-      </label>
-      <label>メールアドレス：<input type="email" id="newEmail"></label>
-      <label>パスワード：<input type="password" id="newPassword"></label>
-      <button onclick="closeModal('createModal')">戻る</button>
-      <button onclick="addUser()">追加</button>
+      <form method="post" action="/admin/signup">
+        <h3>アカウント新規作成</h3>
+        <label>名前：<input type="text" id="newName"></label>
+        <label>管理者権限：
+          <select id="newAdmin">
+            <option value="あり">あり</option>
+            <option value="なし">なし</option>
+          </select>
+        </label>
+        <label>メールアドレス：<input type="email" id="newEmail"></label>
+        <label>パスワード：<input type="password" id="newPassword"></label>
+        <button onclick="closeModal('createModal')">戻る</button>
+        <button onclick="addUser()">追加</button>
     </div>
+    </form>
   </div>
   <!-- 編集モーダル -->
   <div class="modal" id="editModal">
