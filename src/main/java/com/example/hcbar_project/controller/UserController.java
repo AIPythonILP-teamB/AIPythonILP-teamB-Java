@@ -16,6 +16,7 @@ public class UserController {
         return "user_manage"; // user_manage.html
     }
 
+
     @GetMapping("/user/home")
     public String userHome() {
         return "user"; // user.html
@@ -28,3 +29,4 @@ public class UserController {
     }
 
 }
+
