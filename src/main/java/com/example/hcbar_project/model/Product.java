@@ -1,10 +1,8 @@
 package com.example.hcbar_project.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 
 @Entity
-@Data
 public class Product {
 
     @Id
@@ -24,5 +22,39 @@ public class Product {
 
     public void setIsDeleted(Boolean isDeleted) {
         this.isDeleted = isDeleted;
+    }
+    
+    //setter
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public void setJanCode(String janCode) {
+        this.janCode = janCode;
+    }
+
+    //getter
+    public Long getId() {
+        return id;
+    }
+    
+    public String getProductName() {
+        return productName;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public String getJanCode() {
+        return janCode;
     }
 }
