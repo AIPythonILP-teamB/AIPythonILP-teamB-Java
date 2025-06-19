@@ -34,7 +34,9 @@ public class AdminSaleController {
         model.addAttribute("adminSaleDate", LocalDate.now());
         model.addAttribute("adminSales", new ArrayList<Sale>());
         model.addAttribute("products", productService.listAll());
+        model.addAttribute("activePage", "admin_sale_input");
         return "admin_sale_input";
+
     }
 
     @PostMapping("/confirm")
@@ -60,6 +62,7 @@ public class AdminSaleController {
             model.addAttribute("adminSaleDate", date);
             model.addAttribute("sales", sales);
             model.addAttribute("saleDate", date);
+            model.addAttribute("activePage", "admin_sale_confirm");
             return "admin_sale_confirm";
 
         } catch (Exception e) {
@@ -83,6 +86,7 @@ public class AdminSaleController {
         weatherService.fetchAndSaveWeather(date);
 
         model.addAttribute("adminSales", new ArrayList<>());
+        model.addAttribute("activePage", "admin_sale_input");
         return "redirect:/admin/sale/input?completed=true";
     }
 }
