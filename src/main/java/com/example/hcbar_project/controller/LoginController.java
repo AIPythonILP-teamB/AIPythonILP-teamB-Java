@@ -18,6 +18,7 @@ import org.springframework.security.core.Authentication;
 @Controller
 public class LoginController {
     // ログインフォームの表示
+
     // ログイン認証(/login)
     // ログアウト処理(/logout)
     // 管理者がユーザー登録(/register)、パスワード再設定(/reset-password)

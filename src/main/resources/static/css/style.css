@@ -15,6 +15,8 @@
         .container {
             display: flex;
             height: 100vh;
+            overflow: hidden;
+            /* ← はみ出しを防ぐ */
         }
 
 /* ================[Navigation]=============== */
@@ -56,6 +58,54 @@
         .main-content {
             flex: 1;
             padding: 40px;
+
+            height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .fc-header-toolbar,
+        .fc-view-harness,
+        .fc-col-header,
+        .fc-daygrid-body,
+        .fc-scrollgrid-sync-table {
+            width: 100vh;
+            max-width: 700px;
+        }
+
+        #calendar-area {
+            flex: 0 0 700px;
+        }
+
+        .calendar-detail-wrapper {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        #detail-area {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f5f5f5;
+            min-width: 300px;
+        }
+
+        .fc-event-title {
+            color: #000 !important;
+        }
+
+        .fc-event {
+            background-color: transparent !important;
+            /* 背景は透明にする場合 */
+            border: none !important;
+            font-weight: bold;
+        }
+
+        td.fc-daygrid-day:hover {
+            background-color: rgba(70, 177, 225, 0.15) !important;
+            cursor: pointer;
+
         }
 
 
