@@ -3,20 +3,21 @@ document.addEventListener("DOMContentLoaded", function () {
   const openLink = document.getElementById("forgotPasswordLink");
   const closeBtn = document.getElementById("closeModal");
 
-// linkがクリックされた時にモーダルを表示
-  openLink.onclick = function () {
+  // リンクがクリックされたときモーダル表示
+  openLink.addEventListener("click", function (event) {
+    event.preventDefault(); // リンクのジャンプを防止
     modal.style.display = "block";
-  };
+  });
 
-//   // 確認ボタンがクリックされた時にモーダルを非表示
-  closeBtn.onclick = function () {
+  // 閉じるボタンがクリックされたとき非表示
+  closeBtn.addEventListener("click", function () {
     modal.style.display = "none";
-  };
+  });
 
- // モーダルの外側がクリックされた時にモーダルを非表示
-  window.onclick = function (event) {
+  // モーダルの外側をクリックしたら閉じる
+  window.addEventListener("click", function (event) {
     if (event.target === modal) {
       modal.style.display = "none";
     }
-  };
+  });
 });
