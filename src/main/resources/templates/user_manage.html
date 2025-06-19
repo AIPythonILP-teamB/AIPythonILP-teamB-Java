@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ユーザー管理</title>
   <link rel="stylesheet" th:href="@{/css/style.css}">
-  <script th:src="@{/js/admin.js}" defer></script>
+  <script th:src="@{/js/user.js}" defer></script>
 </head>
 
 <body>
@@ -53,19 +53,19 @@
   <!-- アカウント作成モーダル -->
   <div class="modal" id="createModal">
     <div class="modal-content">
-      <form method="post" action="/admin/signup">
-        <h3>アカウント新規作成</h3>
-        <label>名前：<input type="text" id="newName"></label>
-        <label>管理者権限：
-          <select id="newAdmin">
-            <option value="あり">あり</option>
-            <option value="なし">なし</option>
-          </select>
-        </label>
-        <label>メールアドレス：<input type="email" id="newEmail"></label>
-        <label>パスワード：<input type="password" id="newPassword"></label>
-        <button onclick="closeModal('createModal')">戻る</button>
-        <button onclick="addUser()">追加</button>
+      <h3>アカウント新規作成</h3>
+      <p id="addError" style="color: red;"></p>
+      <label>名前：<input type="text" id="newName"></label>
+      <label>管理者権限：
+        <select id="newAdmin">
+          <option value="あり">あり</option>
+          <option value="なし">なし</option>
+        </select>
+      </label>
+      <label>メールアドレス：<input type="email" id="newEmail"></label>
+      <label>パスワード：<input type="password" id="newPassword"></label>
+      <button onclick="closeModal('createModal')">戻る</button>
+      <button onclick="addUser()">追加</button>
     </div>
     </form>
   </div>
@@ -73,6 +73,7 @@
   <div class="modal" id="editModal">
     <div class="modal-content">
       <h3 id="editTitle">情報編集</h3>
+      <p id="editError" style="color: red;"></p>
       <label>名前：<input type="text" id="editName"></label>
       <label>管理者権限：
         <select id="editAdmin">
@@ -81,13 +82,6 @@
         </select>
       </label>
       <label>メールアドレス：<input type="email" id="editEmail"></label>
-      <label>ステータス：
-        <select id="editStatus">
-          <option value="在籍">在籍</option>
-          <option value="休職中">休職中</option>
-          <option value="退職">退職</option>
-        </select>
-      </label>
       <button onclick="closeModal('editModal')">戻る</button>
       <button onclick="updateUser()">変更</button>
     </div>
@@ -112,88 +106,6 @@
       <button onclick="closeModal('doneModal')">確認</button>
     </div>
   </div>
-  <!-- ▼ JavaScript -->
-  <script>
-    let users = [];
-    let editIndex = -1;
-    let resetIndex = -1;
-    function renderTable() {
-      const tbody = document.querySelector("#userTable tbody");
-      tbody.innerHTML = "";
-      users.forEach((u, i) => {
-        const row = `
-<tr>
-<td>${u.name}</td>
-<td>${u.status}</td>
-<td>${u.admin}</td>
-<td>${u.email}</td>
-<td><a href="#" onclick="openResetModal(${i})">再設定</a></td>
-<td><a href="#" onclick="openEditModal(${i})">編集</a></td>
-</tr>
-     `;
-        tbody.innerHTML += row;
-      });
-    }
-    function openCreateModal() {
-      document.getElementById("createModal").style.display = "block";
-    }
-    function addUser() {
-      const name = document.getElementById("newName").value;
-      const admin = document.getElementById("newAdmin").value;
-      const email = document.getElementById("newEmail").value;
-      const pw = document.getElementById("newPassword").value;
-      users.push({ name, status: "在籍", admin, email, password: pw });
-      closeModal("createModal");
-      renderTable();
-    }
-    function openEditModal(index) {
-      editIndex = index;
-      const u = users[index];
-      document.getElementById("editTitle").textContent = `「${u.name}」情報編集`;
-      document.getElementById("editName").value = u.name;
-      document.getElementById("editAdmin").value = u.admin;
-      document.getElementById("editEmail").value = u.email;
-      document.getElementById("editStatus").value = u.status;
-      document.getElementById("editModal").style.display = "block";
-    }
-    function updateUser() {
-      const u = users[editIndex];
-      u.name = document.getElementById("editName").value;
-      u.admin = document.getElementById("editAdmin").value;
-      u.email = document.getElementById("editEmail").value;
-      u.status = document.getElementById("editStatus").value;
-      closeModal("editModal");
-      renderTable();
-    }
-    function openResetModal(index) {
-      resetIndex = index;
-      document.getElementById("resetTitle").textContent = `「${users[index].name}」のパスワード再設定`;
-      document.getElementById("resetPw1").value = "";
-      document.getElementById("resetPw2").value = "";
-      document.getElementById("resetModal").style.display = "block";
-    }
-    function resetPassword() {
-      const pw1 = document.getElementById("resetPw1").value;
-      const pw2 = document.getElementById("resetPw2").value;
-      if (pw1 && pw1 === pw2) {
-        users[resetIndex].password = pw1;
-        closeModal("resetModal");
-        document.getElementById("doneTitle").textContent = `「${users[resetIndex].name}」のパスワード再設定`;
-        document.getElementById("doneModal").style.display = "block";
-      } else {
-        alert("パスワードが一致しません");
-      }
-    }
-    function closeModal(id) {
-      document.getElementById(id).style.display = "none";
-    }
-    // 初期データ（空でもOK）
-    users = [
-      { name: "スタッフA", status: "在籍", admin: "なし", email: "a@exa.com", password: "aaa" },
-      { name: "スタッフB", status: "在籍", admin: "なし", email: "b@exa.com", password: "bbb" }
-    ];
-    renderTable();
-  </script>
 
 </body>
 
