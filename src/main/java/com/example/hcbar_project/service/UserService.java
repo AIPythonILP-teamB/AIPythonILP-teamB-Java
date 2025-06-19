@@ -17,7 +17,7 @@ private UserRepository userRepository;
 
 public List<User> getAllUsers(){
     return
-userRepository.findByIsActiveFalseOrderByIdAsc();
+userRepository.findByIsActiveTrueOrderByIdAsc();
 }
 
  public Optional<User> getUserById(Long id) {
