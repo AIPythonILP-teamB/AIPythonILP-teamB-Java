@@ -39,7 +39,6 @@ function renderProductTable() {
     products.forEach((p, i) => {
         const row = `
       <tr>
-        <td>${p.id}</td>
         <td>${p.productName}</td>
         <td>${p.price}</td>
         <td>${p.janCode}</td>
@@ -64,6 +63,8 @@ function addProduct() {
         errorEl.textContent = "全ての項目を入力してください。";
         return;
     }
+
+    if (!validateProductInput(name, price, jan, errorEl)) return;
 
     const product = {
         productName: name,
@@ -99,6 +100,8 @@ function updateProduct() {
         return;
     }
 
+    if (!validateProductInput(name, price, jan, errorEl)) return;
+
     const updated = {
         id: products[editIndex].id,
         productName: name,
@@ -122,8 +125,24 @@ function updateProduct() {
         });
 }
 
+// 共通バリデーション関数
+function validateProductInput(name, price, jan, errorEl) {
+    if (!name || !price || !jan) {
+        errorEl.textContent = "全ての項目を入力してください。";
+        return false;
+    }
+    if (!/^\d+$/.test(price) || parseInt(price) < 0) {
+        errorEl.textContent = "価格は0以上の数値で入力してください。";
+        return false;
+    }
+    if (!/^\d{13}$/.test(jan)) {
+        errorEl.textContent = "JANコードは13桁の数字で入力してください。";
+        return false;
+    }
+    return true;
+}
+
 function openAddModal() {
-    document.getElementById("addId").value = "";
     document.getElementById("addName").value = "";
     document.getElementById("addPrice").value = "";
     document.getElementById("addJan").value = "";
@@ -134,7 +153,6 @@ function openAddModal() {
 function openEditModal(index) {
     editIndex = index;
     const p = products[index];
-    document.getElementById("editId").value = p.id;
     document.getElementById("editName").value = p.productName;
     document.getElementById("editPrice").value = p.price;
     document.getElementById("editJan").value = p.janCode;
@@ -150,7 +168,7 @@ function closeModal(id) {
 
 
 function deleteProductFromModal() {
-    const id = parseInt(document.getElementById("editId").value);
+    const id = products[editIndex].id;
     if (!confirm('本当に削除しますか？')) return;
     fetch(`/api/products/${id}`, {
         method: 'DELETE'
