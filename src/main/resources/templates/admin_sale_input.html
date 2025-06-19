@@ -13,12 +13,19 @@
     <!-- ナビゲーション -->
     <div class="sidebar">
       <p>管理者：<strong th:text="${name}">[Name]</strong>様</p>
-      <button class="nav-button" onclick="location.href='/forecast'">発注予測</button>
-      <button class="nav-button" onclick="location.href='/user_manage'">ユーザー管理</button>
-      <button class="nav-button" onclick="location.href='/product_list'">商品管理</button>
-      <button class="nav-button active" onclick="location.href='/admin/sale/input'">販売実績入力</button>
-      <button class="nav-button" onclick="location.href='/calendar'">販売実績一覧</button>
-    </div>
+
+      <button class="nav-button" th:classappend="${activePage == 'forecast'} ? ' active' : ''"
+        onclick="location.href='/forecast'">発注予測</button>
+      <button class="nav-button" th:classappend="${activePage == 'user_manage'} ? ' active' : ''"
+        onclick="location.href='/user_manage'">ユーザー管理</button>
+      <button class="nav-button" th:classappend="${activePage == 'product_list'} ? ' active' : ''"
+        onclick="location.href='/product_list'">商品管理</button>
+      <button class="nav-button" th:classappend="${activePage == 'admin_sale_input'} ? ' active' : ''"
+        onclick="location.href='/admin/sale/input'">販売実績入力</button>
+      <button class="nav-button" th:classappend="${activePage == 'calendar'} ? ' active' : ''"
+        onclick="location.href='/calendar'">販売実績一覧</button>
+      <a class="logout-link" href="#" onclick="document.getElementById('logoutForm').submit(); return false;">ログアウト</a>    </div>
+    <form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;"></form>
 
     <!-- メイン表示 -->
     <div class="main-content" id="mainContent">

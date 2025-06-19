@@ -54,3 +54,14 @@
             flex: 1;
             padding: 40px;
         }
+
+        .logout-link {
+            color: #003344;
+            text-decoration: underline;
+            margin-top: auto;
+            cursor: pointer;
+        }
+
+        .logout-link:hover {
+            color: #008fbe;
+        }
