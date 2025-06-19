@@ -20,12 +20,11 @@ public class Product {
     @Column(name = "is_deleted")
     private Boolean isDeleted = false;
 
-
     public void setIsDeleted(Boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
-    
-    //setter
+
+    // setter
     public void setId(Long id) {
         this.id = id;
     }
@@ -42,11 +41,11 @@ public class Product {
         this.janCode = janCode;
     }
 
-    //getter
+    // getter
     public Long getId() {
         return id;
     }
-    
+
     public String getProductName() {
         return productName;
     }
@@ -58,4 +57,6 @@ public class Product {
     public String getJanCode() {
         return janCode;
     }
+
+    
 }
