@@ -33,7 +33,7 @@ public class AdminSaleController {
     public String showInput(Model model) {
         model.addAttribute("adminSaleDate", LocalDate.now());
         model.addAttribute("adminSales", new ArrayList<Sale>());
-        model.addAttribute("products", productService.listAll());
+        model.addAttribute("products", productService.getAllProducts());
         model.addAttribute("activePage", "admin_sale_input");
         return "admin_sale_input";
 

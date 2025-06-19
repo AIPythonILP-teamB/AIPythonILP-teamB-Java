@@ -18,6 +18,8 @@ function navigate(target) {
     }
 }
 
+document.getElementById("userName").textContent = loginUserName;
+
 // 商品管理ページの処理
 let products = [];
 let editIndex = -1;

@@ -9,13 +9,16 @@ import java.util.List;
 
 import java.util.Optional;
 
-
 @Service
 public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
 
+    public Product findById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Product not found with id: " + id));
+    }
 
     public List<Product> getAllProducts() {
         return productRepository.findByIsDeletedFalseOrderByIdAsc();
@@ -37,5 +40,3 @@ public class ProductService {
         });
     }
 }
-
-
