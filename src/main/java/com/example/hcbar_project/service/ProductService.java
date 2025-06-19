@@ -7,19 +7,35 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import java.util.Optional;
+
+
 @Service
 public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
 
-    // 論理削除されていない商品を全件取得
-    public List<Product> listAll() {
-        return productRepository.findByIsDeletedFalse();
+
+    public List<Product> getAllProducts() {
+        return productRepository.findByIsDeletedFalseOrderByIdAsc();
     }
 
-    public Product findById(Long id) {
-        return productRepository.findById(id).orElseThrow();
+    public Optional<Product> getProductById(Long id) {
+        return productRepository.findById(id);
     }
 
+    public Product saveProduct(Product product) {
+        product.setIsDeleted(false); // 常にfalseで登録
+        return productRepository.save(product);
+    }
+
+    public void deleteProduct(Long id) {
+        productRepository.findById(id).ifPresent(product -> {
+            product.setIsDeleted(true);
+            productRepository.save(product);
+        });
+    }
 }
+
+
