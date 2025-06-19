@@ -64,8 +64,8 @@
       </label>
       <label>メールアドレス：<input type="email" id="newEmail"></label>
       <label>パスワード：<input type="password" id="newPassword"></label>
-      <button onclick="closeModal('createModal')">戻る</button>
-      <button onclick="addUser()">追加</button>
+      <button class="modal-button cancel" onclick="closeModal('createModal')">戻る</button>
+      <button class="modal-button confirm" onclick="addUser()">追加</button>
     </div>
     </form>
   </div>
@@ -82,8 +82,8 @@
         </select>
       </label>
       <label>メールアドレス：<input type="email" id="editEmail"></label>
-      <button onclick="closeModal('editModal')">戻る</button>
-      <button onclick="updateUser()">変更</button>
+      <buttonn class="modal-button cancel" onclick="closeModal('editModal')">戻る</button>
+      <button class="modal-button confirm" onclick="updateUser()">変更</button>
     </div>
   </div>
   <!-- パスワード再設定モーダル -->
@@ -94,8 +94,8 @@
       <input type="password" id="resetPw1">
       <p>もう一度入力してください：</p>
       <input type="password" id="resetPw2">
-      <button onclick="closeModal('resetModal')">戻る</button>
-      <button onclick="resetPassword()">再設定</button>
+      <butto class="modal-button cancel"n onclick="closeModal('resetModal')">戻る</button>
+      <button class="modal-button confirm" onclick="resetPassword()">再設定</button>
     </div>
   </div>
   <!-- パスワード完了モーダル -->
@@ -103,7 +103,7 @@
     <div class="modal-content">
       <h3 id="doneTitle">パスワード再設定</h3>
       <p>パスワードが変更できました。</p>
-      <button onclick="closeModal('doneModal')">確認</button>
+      <button class="modal-button confirm" onclick="closeModal('doneModal')">確認</button>
     </div>
   </div>
 

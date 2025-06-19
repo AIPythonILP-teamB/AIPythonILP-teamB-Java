@@ -172,7 +172,8 @@
 
 
         /* ================[Product Table]=============== */
-        #productTable {
+        #productTable,
+        #userTable {
             width: 100%;
             max-width: 800px;
             margin: 0 auto;
@@ -191,8 +192,15 @@
             color: #0B3041;
         }
 
+        #userTable thead {
+            background-color: #a0d3ec;
+            color: #0B3041;
+        }
+
         #productTable th,
-        #productTable td {
+        #productTable td,
+        #userTable th,
+        #userTable td {
             padding: 12px;
             text-align: center;
             border: 1px solid #d3eaf4;
@@ -225,9 +233,43 @@
             background-color: #f2faff;
         }
 
-        #productTable tr:hover {
+
+        /* メールアドレス列の横幅 */
+        #userTable th:nth-child(4) {
+            width: 30%;
+        }
+
+        /* そのほかのuserTableの横幅調整していません */
+
+        #userTable th:nth-child(1) {
+            width: 20%;
+        }
+
+        #userTable th:nth-child(2) {
+            width: 10%;
+        }
+
+        #userTable th:nth-child(3) {
+            width: 10%;
+        }
+
+        #userTable th:nth-child(4) {
+            width: 30%;
+        }
+
+        #userTable th:nth-child(5) {
+            width: 15%;
+        }
+
+        #userTable th:nth-child(6) {
+            width: 15%;
+        }
+
+        #productTable tr:hover,
+        #userTable tr:hover {
             background-color: #e0f4ff;
         }
+
 
 
 

@@ -9,9 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -32,12 +29,12 @@ userRepository.findByIsActiveTrueOrderByIdAsc();
         return userRepository.findById(id);
     }
  public User saveUser(User user) {
-        user.setIsActive(true); 
+        user.setActive(true); 
         return userRepository.save(user);
     }
     public void deleteUser(Long id) {
         userRepository.findById(id).ifPresent(user -> {
-            user.setIsActive(false);
+            user.setActive(false);
             userRepository.save(user);
         });
     }

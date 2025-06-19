@@ -19,7 +19,8 @@ function renderUserTable() {
   const tbody = document.querySelector("#userTable tbody");
   tbody.innerHTML = "";
   users.forEach((u, i) => {
-    const statusText = u.isActive ? "在籍" : "休職/退職";
+    // const statusText = u.isActive ? "在籍" : "休職/退職";
+    const statusText = u.isActive ? "休職/退職" : "在籍";
     const adminText = u.role === "ADMIN" ? "あり" : "なし";
 
     const row = `
@@ -47,7 +48,7 @@ function openCreateModal() {
   document.getElementById("newEmail").value = "";
   document.getElementById("newPassword").value = "";
   document.getElementById("addError").textContent = "";
-  document.getElementById("createModal").style.display = "block";
+  document.getElementById("createModal").style.display = "flex";
 }
 
 // 4) 追加
@@ -87,7 +88,7 @@ function openEditModal(idx) {
   document.getElementById("editAdmin").value = u.role === "ADMIN" ? "あり" : "なし";
   document.getElementById("editEmail").value = u.email;
   document.getElementById("editError").textContent = "";
-  document.getElementById("editModal").style.display = "block";
+  document.getElementById("editModal").style.display = "flex";
 }
 
 // 6) 更新
@@ -136,7 +137,7 @@ function openResetModal(idx) {
   editIndex = idx;
   document.getElementById("resetPw1").value = "";
   document.getElementById("resetPw2").value = "";
-  document.getElementById("resetModal").style.display = "block";
+  document.getElementById("resetModal").style.display = "flex";
 }
 
 // モーダルを閉じる

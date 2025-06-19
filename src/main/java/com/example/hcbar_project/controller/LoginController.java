@@ -48,39 +48,4 @@ public class LoginController {
         // model.addAttribute("name", adminName);
         return "admin"; // admin.html を表示
     }
-
-    // 例: 管理者が全ユーザーを確認するページ
-    @GetMapping("/admin/signup")
-    public String showSignupForm() {
-        return "admin_signup"; // 管理者用のユーザー登録画面
-    }
-
-    @PostMapping("/admin/signup")
-    public String registerUser(@RequestParam String userName,
-            @RequestParam String email,
-            @RequestParam String password,
-            @RequestParam String confirmPassword,
-            RedirectAttributes redirectAttributes,
-            UserService userService) {
-
-        try {
-            if (userName.trim().isEmpty() || email.trim().isEmpty() || password.trim().isEmpty()) {
-                redirectAttributes.addFlashAttribute("errorMessage", "全ての項目を入力してください");
-                return "redirect:/admin/signup";
-            }
-
-            if (!password.equals(confirmPassword)) {
-                redirectAttributes.addFlashAttribute("errorMessage", "パスワードが一致しません");
-                return "redirect:/admin/signup";
-            }
-
-            userService.registerUser(userName, email, password);
-            redirectAttributes.addFlashAttribute("successMessage", "新しいユーザーが登録されました。");
-            return "redirect:/admin/home";
-
-        } catch (RuntimeException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
-            return "redirect:/admin/signup";
-        }
-    }
 }
