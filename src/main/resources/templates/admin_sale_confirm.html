@@ -10,9 +10,10 @@
 
 <body>
   <div class="container">
-    <!-- 既存のナビはそのまま -->
-    <div class="sidebar">…</div>
+    <!-- ナビゲーション -->
+    <div th:replace="fragments/nav :: sidebar"></div>
 
+    <!-- メイン表示 -->
     <div class="main-content" id="mainContent">
       <h2>確認画面</h2>
 
