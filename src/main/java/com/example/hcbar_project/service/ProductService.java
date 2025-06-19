@@ -17,4 +17,9 @@ public class ProductService {
     public List<Product> listAll() {
         return productRepository.findByIsDeletedFalse();
     }
+
+    public Product findById(Long id) {
+        return productRepository.findById(id).orElseThrow();
+    }
+
 }
