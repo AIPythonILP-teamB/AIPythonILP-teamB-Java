@@ -20,25 +20,77 @@
          <label for="date">発注日を選択:</label>
          <select id="date"></select>
 
+
+         <select id="date"></select>
+         <table id="forecastTable">
+            <thead>
+               <tr>
+                  <th>商品名</th>
+                  <th>合計予測数量</th>
+               </tr>
+            </thead>
+            <tbody></tbody>
+         </table>
       </div>
    </div>
+
    <script>
       const select = document.getElementById("date");
-      const today = new Date();
+      const tbody = document.querySelector("#forecastTable tbody");
 
-      // 未来7日分の中から月曜(1)と木曜(4)だけを追加
+      // 今日から10日間の中から月曜(1)・木曜(4)を選択肢に追加
+      const today = new Date();
       for (let i = 0; i < 10; i++) {
          const d = new Date(today);
          d.setDate(d.getDate() + i);
-         const day = d.getDay(); // 日曜=0, 月曜=1, ... 土曜=6
-
-         if (day === 1 || day === 4) { // 月曜または木曜
-            const option = document.createElement("option");
-            option.value = d.toISOString().split("T")[0];
-            option.text = d.toLocaleDateString("ja-JP", { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
-            select.appendChild(option);
+         const day = d.getDay(); // 日=0, 月=1, ...
+         if (day === 1 || day === 4) {
+            const o = document.createElement("option");
+            o.value = d.toISOString().split("T")[0]; // yyyy-mm-dd
+            o.text = d.toLocaleDateString("ja-JP", {
+               weekday: 'short',
+               year: 'numeric',
+               month: '2-digit',
+               day: '2-digit'
+            });
+            select.add(o);
          }
       }
+
+      // 選択された日付でJavaのAPIにリクエスト
+      select.addEventListener("change", async () => {
+         const sel = select.value;
+         if (!sel) return;
+
+         try {
+            const response = await fetch(`/api/forecast/sum?date=${sel}`);
+            const data = await response.json();
+
+            // 表描画
+            tbody.innerHTML = '';
+            data.forEach(item => {
+               const tr = document.createElement("tr");
+               const tdName = document.createElement("td");
+               const tdTotal = document.createElement("td");
+               tdName.textContent = item.productName;
+               tdTotal.textContent = item.total;
+               tr.appendChild(tdName);
+               tr.appendChild(tdTotal);
+               tbody.appendChild(tr);
+            });
+         } catch (e) {
+            console.error("予測データの取得に失敗しました", e);
+            tbody.innerHTML = '<tr><td colspan="2">データ取得に失敗しました</td></tr>';
+         }
+      });
+
+      // 初期表示（1つ目の日付を選択）
+      window.addEventListener("DOMContentLoaded", () => {
+         if (select.options.length > 0) {
+            select.selectedIndex = 0;
+            select.dispatchEvent(new Event("change"));
+         }
+      });
    </script>
 </body>
 

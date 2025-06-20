@@ -27,7 +27,7 @@ public class UserRestController {
         return userService.saveUser(user);
     }
 
-    /*更新 */
+    /* 更新 */
     @PutMapping("/{id}")
     public User updateUser(@PathVariable Long id, @RequestBody User user) {
         user.setId(id);

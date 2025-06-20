@@ -3,7 +3,7 @@
 let users = [];
 let editIndex = -1;
 
-// 1) 初期表示：サーバーからユーザー一覧を取得
+// 初期表示：サーバーからユーザー一覧を取得
 function fetchUsers() {
   fetch('/api/users')
     .then(res => res.json())
@@ -14,12 +14,11 @@ function fetchUsers() {
     .catch(err => console.error('取得失敗:', err));
 }
 
-// 2) テーブル描画
+// テーブル描画
 function renderUserTable() {
   const tbody = document.querySelector("#userTable tbody");
   tbody.innerHTML = "";
   users.forEach((u, i) => {
-    // const statusText = u.isActive ? "在籍" : "休職/退職";
     const statusText = u.isActive ? "休職/退職" : "在籍";
     const adminText = u.role === "ADMIN" ? "あり" : "なし";
 
@@ -41,7 +40,7 @@ function renderUserTable() {
   });
 }
 
-// 3) 新規作成モーダルを開く
+// 新規作成モーダルを開く
 function openCreateModal() {
   document.getElementById("newName").value = "";
   document.getElementById("newAdmin").value = "なし";
@@ -51,8 +50,8 @@ function openCreateModal() {
   document.getElementById("createModal").style.display = "flex";
 }
 
-// 4) 追加
-// 4) アカウント追加処理
+
+//  アカウント追加処理
 function addUser() {
   const userName = document.getElementById("newName").value.trim();
   const role = document.getElementById("newAdmin").value === "あり" ? "ADMIN" : "USER";
@@ -80,7 +79,7 @@ function addUser() {
     .catch(err => { errorEl.textContent = err.message; });
 }
 
-// 5) 編集モーダルを開く
+//  編集モーダルを開く
 function openEditModal(idx) {
   editIndex = idx;
   const u = users[idx];
@@ -91,7 +90,7 @@ function openEditModal(idx) {
   document.getElementById("editModal").style.display = "flex";
 }
 
-// 6) 更新
+//  更新
 function updateUser() {
   const u = users[editIndex];
   const userName = document.getElementById("editName").value.trim();
@@ -120,7 +119,7 @@ function updateUser() {
     .catch(err => { errorEl.textContent = err.message; });
 }
 
-// 7) 論理削除
+//  論理削除
 function deleteUser(idx) {
   if (!confirm('本当に削除しますか？')) return;
   const u = users[idx];
@@ -132,7 +131,7 @@ function deleteUser(idx) {
     .catch(err => alert(err.message));
 }
 
-// 7) パスワード再設定モーダルを開く
+//  パスワード再設定モーダルを開く
 function openResetModal(idx) {
   editIndex = idx;
   document.getElementById("resetPw1").value = "";

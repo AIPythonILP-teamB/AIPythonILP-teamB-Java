@@ -3,7 +3,9 @@ package com.example.hcbar_project.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "\"user\"")  // PostgreSQL予約語のためダブルクォート必須
+@Table(name = "\"user\"") // PostgreSQL予約語のためダブルクォート必須
+@Data
+
 public class User {
 
     @Id
@@ -22,6 +24,7 @@ public class User {
 
     @Column(name = "is_active")
     private boolean isActive = true;
+
 
     // --- Getter and Setter ---
 
@@ -71,5 +74,10 @@ public class User {
 
     public void setActive(boolean active) {
         isActive = active;
+        this.isActive = active;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

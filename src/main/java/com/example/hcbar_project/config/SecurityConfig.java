@@ -52,11 +52,9 @@ public class SecurityConfig {
                 return http.build();
         }
 
-        // static method 呼び出しを避け、Autowired された Bean を使用する
         @Autowired
         public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
                 auth.userDetailsService(userDetailsService)
                                 .passwordEncoder(passwordEncoder);
         }
-
 }

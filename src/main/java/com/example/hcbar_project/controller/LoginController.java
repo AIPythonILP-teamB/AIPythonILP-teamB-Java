@@ -8,12 +8,8 @@ import org.springframework.security.core.Authentication;
 
 @Controller
 public class LoginController {
+
     // ログインフォームの表示
-
-    // ログイン認証(/login)
-    // ログアウト処理(/logout)
-    // 管理者がユーザー登録(/register)、パスワード再設定(/reset-password)
-
     @GetMapping("/login")
     public String login(@RequestParam(value = "error", required = false) String error,
             @RequestParam(value = "logout", required = false) String logout,
@@ -27,6 +23,7 @@ public class LoginController {
         return "login";
     }
 
+    // ログイン分岐
     @GetMapping("/default")
     public String redirectAfterLogin(Authentication authentication) {
         if (authentication.getAuthorities().stream()
@@ -40,8 +37,6 @@ public class LoginController {
     // 管理者ホーム画面
     @GetMapping("/admin/home")
     public String adminHome(Model model) {
-        // 例: 管理者用の統計データやユーザー一覧を表示したい場合
-        // model.addAttribute("name", adminName);
-        return "admin"; // admin.html を表示
+        return "admin";
     }
 }

@@ -14,7 +14,7 @@
       <div class="sidebar">
          <p>一般ユーザー：<strong th:text="${name}">[Name]</strong>様</p>
          <button class="nav-button" th:classappend="${activePage == 'sale_input'} ? ' active' : ''"
-            onclick="location.href='/sale_input'">販売実績入力</button>
+            onclick="location.href='/sale/input'">販売実績入力</button>
          <a class="logout-link" href="#"
             onclick="document.getElementById('logoutForm').submit(); return false;">ログアウト</a>
       </div>
