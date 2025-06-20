@@ -20,6 +20,10 @@ public class ProductService {
                 .orElseThrow(() -> new IllegalArgumentException("Product not found with id: " + id));
     }
 
+    public Optional<Product> findByJanCode(String janCode) {
+        return productRepository.findByJanCode(janCode);
+    }
+
     public List<Product> getAllProducts() {
         return productRepository.findByIsDeletedFalseOrderByIdAsc();
     }

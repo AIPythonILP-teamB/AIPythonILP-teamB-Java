@@ -31,4 +31,61 @@ public class Weather {
     @Column(name = "icon")
     private String icon;
 
+    // --- Getter ---
+    public Long getId() {
+        return id;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public String getWeatherMain() {
+        return weatherMain;
+    }
+
+    public float getMaxTemp() {
+        return maxTemp;
+    }
+
+    public float getMinTemp() {
+        return minTemp;
+    }
+
+    public float getWindSpeed() {
+        return windSpeed;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    // --- Setter ---
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public void setWeatherMain(String weatherMain) {
+        this.weatherMain = weatherMain;
+    }
+
+    public void setMaxTemp(float maxTemp) {
+        this.maxTemp = maxTemp;
+    }
+
+    public void setMinTemp(float minTemp) {
+        this.minTemp = minTemp;
+    }
+
+    public void setWindSpeed(float windSpeed) {
+        this.windSpeed = windSpeed;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 }
