@@ -1,11 +1,11 @@
 package com.example.hcbar_project.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 
 @Entity
 @Table(name = "\"user\"") // PostgreSQL予約語のためダブルクォート必須
 @Data
+
 public class User {
 
     @Id
@@ -24,6 +24,25 @@ public class User {
 
     @Column(name = "is_active")
     private boolean isActive = true;
+
+
+    // --- Getter and Setter ---
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getEmail() {
         return email;
@@ -54,6 +73,7 @@ public class User {
     }
 
     public void setActive(boolean active) {
+        isActive = active;
         this.isActive = active;
     }
 

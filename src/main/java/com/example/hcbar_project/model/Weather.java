@@ -1,12 +1,9 @@
 package com.example.hcbar_project.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-
 import java.time.LocalDate;
 
 @Entity
-@Data
 public class Weather {
 
     @Id
@@ -30,6 +27,65 @@ public class Weather {
 
     @Column(name = "icon")
     private String icon;
+
+    // --- Getter and Setter ---
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public String getWeatherMain() {
+        return weatherMain;
+    }
+
+    public void setWeatherMain(String weatherMain) {
+        this.weatherMain = weatherMain;
+    }
+
+    public Float getMaxTemp() {
+        return maxTemp;
+    }
+
+    public void setMaxTemp(Float maxTemp) {
+        this.maxTemp = maxTemp;
+    }
+
+    public Float getMinTemp() {
+        return minTemp;
+    }
+
+    public void setMinTemp(Float minTemp) {
+        this.minTemp = minTemp;
+    }
+
+    public Float getWindSpeed() {
+        return windSpeed;
+    }
+
+    public void setWindSpeed(Float windSpeed) {
+        this.windSpeed = windSpeed;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+}
 
     // --- Getter ---
     public Long getId() {
@@ -89,3 +145,4 @@ public class Weather {
         this.icon = icon;
     }
 }
+
