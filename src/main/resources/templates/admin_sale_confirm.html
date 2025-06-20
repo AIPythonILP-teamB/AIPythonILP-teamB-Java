@@ -5,20 +5,15 @@
   <meta charset="UTF-8">
   <title>確認画面</title>
   <link rel="stylesheet" th:href="@{/css/style.css}">
+  <script th:src="@{/js/admin_sale.js}" defer></script>
 </head>
 
 <body>
   <div class="container">
     <!-- ナビゲーション -->
-    <div class="sidebar">
-      <p>一般ユーザー：<strong th:text="${name}">[Name]</strong>様</p>
-      <button class="nav-button" th:classappend="${activePage == 'sale_input'} ? ' active' : ''"
-        onclick="location.href='/sale_input'">販売実績入力</button>
-            <a class="logout-link" href="#" onclick="document.getElementById('logoutForm').submit(); return false;">ログアウト</a>    </div>
-    <form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;"></form>
-    </div>
+    <div th:replace="fragments/nav :: sidebar"></div>
 
-
+    <!-- メイン表示 -->
     <div class="main-content" id="mainContent">
       <h2>確認画面</h2>
 
@@ -26,7 +21,7 @@
       <p>日付：<span th:text="${saleDate}">--</span></p>
 
       <!-- 確認テーブル -->
-      <table border="1">
+      <table id="salesTable">
         <thead>
           <tr>
             <th>商品</th>
@@ -35,19 +30,19 @@
         </thead>
         <tbody>
           <tr th:each="s : ${sales}">
-            <td th:text="${s.product.name}">商品名</td>
+            <td th:text="${s.product.productName}">商品名</td>
             <td th:text="${s.quantity}">0</td>
           </tr>
         </tbody>
       </table>
 
       <!-- 送信ボタン -->
-      <form th:action="@{/sales/save}" method="post">
+      <form th:action="@{/admin/sale/save}" method="post">
         <button type="submit">送信</button>
       </form>
 
       <!-- 戻る（セッションを保持したまま入力画面に戻る） -->
-      <a th:href="@{/sales/input}">戻る</a>
+      <a th:href="@{/admin/sale/input}">戻る</a>
     </div>
   </div>
 </body>
