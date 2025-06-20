@@ -18,10 +18,10 @@
       <h2>確認画面</h2>
 
       <!-- 日付 -->
-      <p>日付：<span th:text="${saleDate}">--</span></p>
+      <h3>日付：<span th:text="${saleDate}">--</span></h3>
 
       <!-- 確認テーブル -->
-      <table id="salesTable">
+      <table class="styled-table">
         <thead>
           <tr>
             <th>商品</th>
@@ -36,13 +36,16 @@
         </tbody>
       </table>
 
-      <!-- 送信ボタン -->
-      <form th:action="@{/admin/sale/save}" method="post">
-        <button type="submit">送信</button>
-      </form>
+      <br>
 
-      <!-- 戻る（セッションを保持したまま入力画面に戻る） -->
-      <a th:href="@{/admin/sale/input}">戻る</a>
+      <div class="button-row">
+        <a class="button cancel" th:href="@{/admin/sale/input}">戻る</a>
+
+        <form th:action="@{/admin/sale/save}" method="post" style="display: inline;">
+          <button class="button confirm" type="submit">送信</button>
+        </form>
+      </div>
+      
     </div>
   </div>
 </body>
