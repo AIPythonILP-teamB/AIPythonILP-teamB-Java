@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
             center: 'title',
             right: ''
         },
-        // ① REST API からイベントを取得
+        // REST API からイベントを取得
         events: (fetchInfo, successCallback, failureCallback) => {
             const start = fetchInfo.startStr;
             const end = fetchInfo.endStr;
@@ -30,11 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // 親の日付セルにアクセスして背景色を設定
             const cell = info.el.closest(".fc-daygrid-day");
             if (cell) {
-                cell.style.backgroundColor = "rgba(135, 206, 250, 0.2)";  // 例: 水色
+                cell.style.backgroundColor = "rgba(135, 206, 250, 0.2)";
             }
         },
 
-        // ② セルクリックで詳細モーダルを開く
+        // セルクリックで詳細モーダルを開く
         dateClick: info => openDetail(info.dateStr)
     },
 

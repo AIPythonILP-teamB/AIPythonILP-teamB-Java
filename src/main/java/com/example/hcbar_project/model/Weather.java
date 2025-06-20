@@ -29,6 +29,6 @@ public class Weather {
     private Float windSpeed;
 
     @Column(name = "icon")
-    private String icon; // 追加部分（例: "01d", "03n"）
+    private String icon;
 
 }

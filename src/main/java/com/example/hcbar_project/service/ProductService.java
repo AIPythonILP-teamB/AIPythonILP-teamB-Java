@@ -29,7 +29,7 @@ public class ProductService {
     }
 
     public Product saveProduct(Product product) {
-        product.setIsDeleted(false); // 常にfalseで登録
+        product.setIsDeleted(false);
         return productRepository.save(product);
     }
 

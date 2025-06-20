@@ -9,7 +9,7 @@ public class CalendarController {
     @GetMapping("/calendar")
     public String showCalendarPage(Model model) {
         model.addAttribute("activePage", "calendar");
-        return "calendar"; // 過去実績画面（calendar.html など）
+        return "calendar";
     }
 
 }

@@ -16,10 +16,9 @@
             display: flex;
             height: 100vh;
             overflow-y: hidden;
-            /* ← はみ出しを防ぐ */
         }
 
-        /* ================[Navigation]=============== */
+        /* ナビゲーションバー */
         .sidebar {
             width: 200px;
             background-color: #a0d3ec;
@@ -97,7 +96,6 @@
 
         .fc-event {
             background-color: transparent !important;
-            /* 背景は透明にする場合 */
             border: none !important;
             font-weight: bold;
         }
@@ -109,7 +107,7 @@
         }
 
 
-        /* ================[modal]=============== */
+        /* modal */
         .modal {
             display: none;
             position: fixed;
@@ -170,8 +168,7 @@
         }
 
 
-
-        /* ================[Product Table]=============== */
+        /* productTable */
         #productTable,
         #userTable {
             width: 100%;
@@ -273,7 +270,7 @@
 
 
 
-        /* ================[modal button]=============== */
+        /* モーダル */
         .modal-button {
             padding: 10px 18px;
             font-size: 16px;

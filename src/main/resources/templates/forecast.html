@@ -20,25 +20,74 @@
          <label for="date">発注日を選択:</label>
          <select id="date"></select>
 
+
+         <select id="date"></select>
+         <table id="forecastTable">
+            <thead>
+               <tr>
+                  <th>商品名</th>
+                  <th>合計予測数量</th>
+               </tr>
+            </thead>
+            <tbody></tbody>
+         </table>
       </div>
    </div>
+
    <script>
+      const apiUrl = 'https://teamb-func.azurewebsites.net/api/getpredict?code=hJ7GWeVHFWyHzfZo088GuGittzIXwPazHqmGQ__SjBWbAzFu5upddw==';
       const select = document.getElementById("date");
-      const today = new Date();
+      const tbody = document.querySelector("#forecastTable tbody");
+
 
       // 未来7日分の中から月曜(1)と木曜(4)だけを追加
+      const today = new Date();
       for (let i = 0; i < 10; i++) {
          const d = new Date(today);
          d.setDate(d.getDate() + i);
-         const day = d.getDay(); // 日曜=0, 月曜=1, ... 土曜=6
-
-         if (day === 1 || day === 4) { // 月曜または木曜
-            const option = document.createElement("option");
-            option.value = d.toISOString().split("T")[0];
-            option.text = d.toLocaleDateString("ja-JP", { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
-            select.appendChild(option);
+         const day = d.getDay();
+         if (day === 1 || day === 4) {
+            const o = document.createElement("option");
+            o.value = d.toISOString().split("T")[0];
+            o.text = d.toLocaleDateString("ja-JP", { weekday: 'short', year: 'numeric', month: '2-digit', day: '2-digit' });
+            select.add(o);
          }
       }
+      // 選択されたときの処理
+      select.addEventListener("change", async () => {
+         const sel = select.value;
+         const resp = await fetch(apiUrl);
+         const data = await resp.json();
+         const selDate = new Date(sel);
+         const day = selDate.getDay();
+         const keepDays = day === 1 ? 6 : day === 4 ? 3 : 0;
+
+         // 対象期間抽出
+         const start = new Date(selDate);
+         if (day === 1) start.setDate(start.getDate() + 1); // 月曜→翌火曜
+         if (day === 4) start.setDate(start.getDate() + 1); // 木曜→翌金曜
+         const target = data.slice().filter(x => {
+            const d = new Date(x.date);
+            return d >= start && d < new Date(start.getTime() + keepDays * 86400000);
+         });
+
+         // jan_codeごとに合計
+         const sums = {};
+         target.forEach(x => {
+            Object.entries(x.prediction).forEach(([name, val]) => {
+               if (name === 'date' || name === 'total_prediction') return;
+               sums[name] = (sums[name] || 0) + val;
+            });
+         });
+
+         // JanCodeでDB商品に対応させるにはAPIを作る必要
+         // 現段階では productName をそのまま使用
+         tbody.innerHTML = '';
+         for (const [name, val] of Object.entries(sums)) {
+            const row = `<tr><td>${name}</td><td>${Math.round(val)}</td></tr>`;
+            tbody.insertAdjacentHTML('beforeend', row);
+         }
+      });
    </script>
 </body>
 

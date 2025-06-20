@@ -7,6 +7,7 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     Product findByJanCode(String janCode);
 
-    List<Product> findByIsDeletedFalseOrderByIdAsc();; // 論理削除されていない商品を取得
+    // 論理削除されていない商品を取得
+    List<Product> findByIsDeletedFalseOrderByIdAsc();;
 
 }

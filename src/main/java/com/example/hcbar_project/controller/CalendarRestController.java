@@ -21,7 +21,7 @@ public class CalendarRestController {
     private WeatherRepository weatherRepository;
 
 
-    // ① カレンダーに表示するイベント一覧（1ヶ月分など）
+    //  カレンダーに表示するイベント一覧
     @GetMapping("/events")
     public List<Map<String, Object>> getCalendarEvents(
             @RequestParam String start,
@@ -47,16 +47,16 @@ public class CalendarRestController {
             LocalDate date = w.getDate();
             int totalSales = salesPerDate.getOrDefault(date, 0);
             result.add(Map.of(
-                    "title", totalSales + "本", // タイトルを販売数だけにするなど
+                    "title", totalSales + "本",
                     "start", date.toString(),
-                    "icon", w.getIcon() // ← OpenWeatherMapのアイコンコード（例: "01d"）
+                    "icon", w.getIcon()
             ));
         }
 
         return result;
     }
 
-    // ② 日付クリック時の詳細モーダル表示
+    // 日付クリック時の詳細モーダル表示
     @GetMapping("/detail")
     public Map<String, Object> getDetailByDate(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
