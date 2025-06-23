@@ -4,6 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.security.Principal;
+
 import org.springframework.security.core.Authentication;
 
 @Controller
@@ -36,7 +39,7 @@ public class LoginController {
 
     // 管理者ホーム画面
     @GetMapping("/admin/home")
-    public String adminHome(Model model) {
+    public String adminHome(Model model, Principal principal) {
         return "admin";
     }
 }
