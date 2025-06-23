@@ -1,5 +1,6 @@
 package com.example.hcbar_project.service;
 
+import com.example.hcbar_project.config.*;
 import com.example.hcbar_project.model.User;
 import com.example.hcbar_project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,12 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("ユーザーが見つかりません: " + email));
 
-        return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
-                AuthorityUtils.createAuthorityList("ROLE_" + user.getRole().toUpperCase()) 
-        );
+
+                 return new CustomUserDetails(user);
+        // return new org.springframework.security.core.userdetails.User(
+        //         user.getEmail(),
+        //         user.getPassword(),
+        //         AuthorityUtils.createAuthorityList("ROLE_" + user.getRole().toUpperCase()) 
     }
 
 }

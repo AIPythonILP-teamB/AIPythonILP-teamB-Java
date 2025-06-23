@@ -12,7 +12,7 @@
    <div class="container">
       <!-- ナビゲーション -->
       <div class="sidebar">
-         <p>一般ユーザー：<strong th:text="${name}">[Name]</strong>様</p>
+         <p>一般ユーザー：<strong th:text="${userName}">[Name]</strong>様</p>
          <button class="nav-button" th:classappend="${activePage == 'sale_input'} ? ' active' : ''"
             onclick="location.href='/sale/input'">販売実績入力</button>
          <a class="logout-link" href="#"
@@ -23,7 +23,7 @@
 
       <!-- メイン表示 -->
       <div class="main-content">
-         <p><span id="userName">[Name]</span>様、発注予測システムへようこそ。</p>
+         <p><strong th:text="${userName}">[Name]</strong>様、発注予測システムへようこそ。</p>
       </div>
    </div>
 </body>

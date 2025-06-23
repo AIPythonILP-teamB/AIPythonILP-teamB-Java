@@ -5,64 +5,74 @@
   <meta charset="UTF-8">
   <title>販売実績入力</title>
   <link rel="stylesheet" th:href="@{/css/style.css}">
+  <script th:src="@{/js/user_sale.js}" defer></script>
 </head>
 
 <body>
   <div class="container">
     <!-- ナビゲーション-->
     <div class="sidebar">
-      <p>一般ユーザー：<strong th:text="${name}">[Name]</strong>様</p>
+      <p>一般ユーザー：<strong th:text="${userName}">[Name]</strong>様</p>
 
       <button class="nav-button" th:classappend="${activePage == 'sale_input'} ? ' active' : ''"
-        th:onclick="|location.href='@{/sales/input}'|">
+        th:onclick="|location.href='@{/sale/input}'|">
         販売実績入力
       </button>
       <a class="logout-link" href="#" onclick="document.getElementById('logoutForm').submit(); return false;">ログアウト</a>
     </div>
     <form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;"></form>
-  </div>
 
 
-  <div class="main-content" id="mainContent">
-    <h1>販売実績入力画面</h1>
 
-    <!-- 日付選択 -->
-    <label>日付選択：
-      <input type="date" id="inputDate" required />
-    </label><br><br>
+    <div class="main-content" id="mainContent">
+      <h1>販売実績入力画面</h1>
 
-    <!-- 商品選択と本数 -->
-    <label>商品名：
-      <select id="productSelect" required>
-        <option value="" disabled selected>選択してください</option>
-        <option th:each="p : ${products}" th:value="${p.id}" th:text="${p.productName}"></option>
-      </select>
-    </label>
+      <!-- 日付選択 -->
+      <div class="input-block">
+        <label class="form-label">日付選択：
+          <input type="date" id="inputDate" class="form-input" required />
+        </label>
+      </div>
 
-    <label>本数：
-      <input type="number" id="quantityInput" min="1" required />
-    </label>
-    <button onclick="addRow()">追加</button>
+      <!-- 商品選択と本数 -->
+      <div class="input-row">
+        <label class="form-label inline">
+          商品名：
+          <select id="productSelect" class="form-input" required>
+            <option value="" disabled selected>選択してください</option>
+            <option th:each="p : ${products}" th:value="${p.id}" th:text="${p.productName}"></option>
+          </select>
+        </label>
 
-    <!-- 販売実績テーブル -->
-    <table id="salesTable">
-      <thead>
-        <tr>
-          <th>商品名</th>
-          <th>本数</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- JS で動的に行が追加される -->
-      </tbody>
-    </table>
+        <label class="form-label inline">
+          本数：
+          <input type="number" id="quantityInput" class="form-input" min="1" required />
+        </label>
+        <button class="button confirm" onclick="addRow()">追加</button>
+      </div>
 
-    <!-- 確認へ -->
-    <form id="confirmForm" action="/sale/confirm" method="post">
-      <input type="hidden" name="date" id="hiddenDate">
-      <input type="hidden" name="salesJson" id="salesJson">
-      <button type="submit">確認画面へ</button>
-    </form>
+      <!-- 販売実績テーブル -->
+      <table id="salesTable" class="styled-table">
+        <thead>
+          <tr>
+            <th>商品名</th>
+            <th>本数</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- JS で動的に行が追加される -->
+        </tbody>
+      </table>
+
+      <br>
+
+      <!-- 確認へ -->
+      <form id="confirmForm" action="/sale/confirm" method="post">
+        <input type="hidden" name="date" id="hiddenDate">
+        <input type="hidden" name="salesJson" id="salesJson">
+        <button class="button confirm" type="submit">確認画面へ</button>
+      </form>
+    </div>
   </div>
   <script>
     // URLに「completed=true」が含まれていたらアラートを表示

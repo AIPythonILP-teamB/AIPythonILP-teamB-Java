@@ -1,5 +1,5 @@
 <div class="sidebar" th:fragment="sidebar">
-  <p>管理者：<strong th:text="${name}">[Name]</strong>様</p>
+  <p>管理者：<strong th:text="${userName}">[Name]</strong>様</p>
 
   <button class="nav-button" th:classappend="${activePage == 'forecast'} ? ' active' : ''"
     onclick="location.href='/forecast'">発注予測</button>
@@ -18,8 +18,4 @@
 
   <a class="logout-link" href="#" onclick="document.getElementById('logoutForm').submit(); return false;">ログアウト</a>
   <form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;"></form>
-</div>
-<div id="loadingOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-    background:rgba(0,0,0,0.5); z-index:1000; justify-content:center; align-items:center; color:white; font-size:2em;">
-  読み込み中...
 </div>
