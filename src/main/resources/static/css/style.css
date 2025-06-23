@@ -32,13 +32,14 @@
         }
 
         .nav-button {
-            color: #0B3041;
+            /* color: #0B3041; */
+            color:#ffffff;
             padding: 10px;
             font-size: larger;
-            font-weight: bold;
+            /* font-weight: bold; */
             width: 85%;
             margin: 0 auto;
-            background-color: #46B1E1;
+            background-color: #3b9cc9;
             border: 2%;
             border-color: #0B3041;
             border-radius: 20px;
