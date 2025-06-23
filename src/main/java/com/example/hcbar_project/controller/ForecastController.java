@@ -2,7 +2,7 @@ package com.example.hcbar_project.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.example.hcbar_project.service.ProductService;
 import com.example.hcbar_project.dto.ForecastResultDto;
@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,6 +22,12 @@ public class ForecastController {
     @Autowired
     private ProductService productService;
 
+    @Value("${azure.forecast.url}")
+    private String forecastUrl;
+
+    @Value("${azure.forecast.key}")
+    private String forecastKey;
+
     @GetMapping("/forecast")
     public String showForecast(Model model) {
         model.addAttribute("activePage", "forecast");
@@ -34,7 +39,8 @@ public class ForecastController {
     public List<ForecastResultDto> getForecastSum(
             @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate selectedDate) {
 
-        String apiUrl = "https://teamb-func.azurewebsites.net/api/getpredict?code=hJ7GWeVHFWyHzfZo088GuGittzIXwPazHqmGQ__SjBWbAzFu5upddw==";
+        String apiUrl = forecastUrl + "?code=" + forecastKey;
+        
         RestTemplate restTemplate = new RestTemplate();
         String response = restTemplate.getForObject(apiUrl, String.class);
 

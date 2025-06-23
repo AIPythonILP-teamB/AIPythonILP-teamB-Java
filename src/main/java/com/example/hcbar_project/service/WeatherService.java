@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,13 +18,17 @@ public class WeatherService {
     @Autowired
     private WeatherRepository weatherRepository;
 
-    private static final String FUNCTION_URL = "https://teamb-func.azurewebsites.net/api/gettodayowm?code=hJ7GWeVHFWyHzfZo088GuGittzIXwPazHqmGQ__SjBWbAzFu5upddw==";
+    @Value("${azure.function.url}")
+    private String functionUrl;
+
+    @Value("${azure.function.key}")
+    private String functionKey;
 
     public void fetchAndSaveWeather(LocalDate date) {
         try {
             RestTemplate restTemplate = new RestTemplate();
-            String json = restTemplate.getForObject(FUNCTION_URL, String.class);
-
+            String fullUrl = functionUrl + "?code=" + functionKey;
+            String json = restTemplate.getForObject(fullUrl, String.class);
 
             ObjectMapper mapper = new ObjectMapper();
             JsonNode node = mapper.readTree(json);

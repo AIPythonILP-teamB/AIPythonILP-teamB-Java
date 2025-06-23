@@ -16,45 +16,45 @@ import com.example.hcbar_project.service.CustomUserDetailsService;
 @EnableWebSecurity
 public class SecurityConfig {
 
-        @Autowired
-        private CustomUserDetailsService userDetailsService;
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
 
-        @Autowired
-        private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-        @Bean
-        public static PasswordEncoder passwordEncoder() {
-                return new BCryptPasswordEncoder(); 
-        }
+    @Bean
+    public static PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-        @Bean
-        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-                http
-                                .authorizeHttpRequests(authz -> authz
-                                                .requestMatchers("/css/**", "/js/**").permitAll()
-                                                .requestMatchers("/login", "/default", "/reset-password/**").permitAll()
-                                                .requestMatchers("/admin/**").hasRole("ADMIN")
-                                                .requestMatchers("/user/**").hasRole("USER")
-                                                .anyRequest().authenticated())
-                                .formLogin(form -> form
-                                                .loginPage("/login")
-                                                .usernameParameter("email")
-                                                .passwordParameter("password")
-                                                .defaultSuccessUrl("/default", true)
-                                                .failureUrl("/login?error=true")
-                                                .permitAll())
-                                .logout(logout -> logout
-                                                .logoutUrl("/logout")
-                                                .logoutSuccessUrl("/login?logout=true")
-                                                .permitAll())
-                                .csrf(csrf -> csrf.disable());
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/css/**", "/js/**").permitAll()
+                        .requestMatchers("/login", "/default", "/reset-password/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/user/**").hasRole("USER")
+                        .anyRequest().authenticated())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
+                        .defaultSuccessUrl("/default", true)
+                        .failureUrl("/login?error=true")
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout=true")
+                        .permitAll())
+                .csrf(csrf -> csrf.disable());
 
-                return http.build();
-        }
+        return http.build();
+    }
 
-        @Autowired
-        public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-                auth.userDetailsService(userDetailsService)
-                                .passwordEncoder(passwordEncoder);
-        }
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder);
+    }
 }
