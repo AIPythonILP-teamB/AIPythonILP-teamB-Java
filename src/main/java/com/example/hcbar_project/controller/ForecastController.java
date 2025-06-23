@@ -40,9 +40,11 @@ public class ForecastController {
             @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate selectedDate) {
 
         String apiUrl = forecastUrl + "?code=" + forecastKey;
-        
+
         RestTemplate restTemplate = new RestTemplate();
         String response = restTemplate.getForObject(apiUrl, String.class);
+
+        System.out.println("APIresponse"+response);
 
         List<ForecastResultDto> result = new ArrayList<>();
         try {
@@ -50,7 +52,7 @@ public class ForecastController {
             JsonNode root = mapper.readTree(response);
 
             int dayOfWeek = selectedDate.getDayOfWeek().getValue(); // 月=1, 木=4
-            int daysToUse = (dayOfWeek == 1) ? 6 : (dayOfWeek == 4) ? 3 : 0;
+            int daysToUse = (dayOfWeek == 1) ? 7 : (dayOfWeek == 4) ? 3 : 0;
             if (daysToUse == 0)
                 return result;
 
@@ -68,9 +70,14 @@ public class ForecastController {
                             double val = prediction.get(type).asDouble();
                             sumByType.merge(type, val, Double::sum);
                         }
+
                     });
                 }
+                // デバッグ用
+                System.out.println("forecastDate：" + forecastDate);
             }
+            System.out.println("start：" + start + " ,end：" + end);
+            System.out.println("sumByType：" + sumByType);
 
             for (Map.Entry<String, Double> entry : sumByType.entrySet()) {
                 String code = mapBeerTypeToJan(entry.getKey());
@@ -81,7 +88,8 @@ public class ForecastController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        // デバッグ用
+        System.err.println(result);
         return result;
     }
 

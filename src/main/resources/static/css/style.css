@@ -281,7 +281,7 @@
             margin-right: 10px;
             text-decoration: none;
             display: inline-block;
-            text-align:center;
+            text-align: center;
             line-height: 1.5;
         }
 
@@ -411,4 +411,8 @@
         .form-label.inline input {
             margin-top: 4px;
             width: 200px;
+        }
+
+        #loadingOverlay {
+            text-align: center;
         }
