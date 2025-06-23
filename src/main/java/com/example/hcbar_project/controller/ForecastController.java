@@ -2,7 +2,7 @@ package com.example.hcbar_project.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.example.hcbar_project.service.ProductService;
 import com.example.hcbar_project.dto.ForecastResultDto;
@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,6 +22,12 @@ public class ForecastController {
     @Autowired
     private ProductService productService;
 
+    @Value("${azure.forecast.url}")
+    private String forecastUrl;
+
+    @Value("${azure.forecast.key}")
+    private String forecastKey;
+
     @GetMapping("/forecast")
     public String showForecast(Model model) {
         model.addAttribute("activePage", "forecast");
@@ -34,9 +39,12 @@ public class ForecastController {
     public List<ForecastResultDto> getForecastSum(
             @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate selectedDate) {
 
-        String apiUrl = "https://teamb-func.azurewebsites.net/api/getpredict?code=hJ7GWeVHFWyHzfZo088GuGittzIXwPazHqmGQ__SjBWbAzFu5upddw==";
+        String apiUrl = forecastUrl + "?code=" + forecastKey;
+
         RestTemplate restTemplate = new RestTemplate();
         String response = restTemplate.getForObject(apiUrl, String.class);
+
+        System.out.println("APIresponse"+response);
 
         List<ForecastResultDto> result = new ArrayList<>();
         try {
@@ -44,7 +52,7 @@ public class ForecastController {
             JsonNode root = mapper.readTree(response);
 
             int dayOfWeek = selectedDate.getDayOfWeek().getValue(); // 月=1, 木=4
-            int daysToUse = (dayOfWeek == 1) ? 6 : (dayOfWeek == 4) ? 3 : 0;
+            int daysToUse = (dayOfWeek == 1) ? 7 : (dayOfWeek == 4) ? 3 : 0;
             if (daysToUse == 0)
                 return result;
 
@@ -62,9 +70,14 @@ public class ForecastController {
                             double val = prediction.get(type).asDouble();
                             sumByType.merge(type, val, Double::sum);
                         }
+
                     });
                 }
+                // デバッグ用
+                System.out.println("forecastDate：" + forecastDate);
             }
+            System.out.println("start：" + start + " ,end：" + end);
+            System.out.println("sumByType：" + sumByType);
 
             for (Map.Entry<String, Double> entry : sumByType.entrySet()) {
                 String code = mapBeerTypeToJan(entry.getKey());
@@ -75,7 +88,8 @@ public class ForecastController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        // デバッグ用
+        System.err.println(result);
         return result;
     }
 
