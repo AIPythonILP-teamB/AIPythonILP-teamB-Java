@@ -139,6 +139,36 @@ function openResetModal(idx) {
   document.getElementById("resetModal").style.display = "flex";
 }
 
+//　パスワードを再設定する
+// パスワード再設定処理
+function resetPassword() {
+  const pw1 = document.getElementById("resetPw1").value;
+  const pw2 = document.getElementById("resetPw2").value;
+  const u = users[editIndex]; // openResetModal で設定されたユーザー
+
+  if (!pw1 || !pw2) {
+    alert("パスワードを両方入力してください");
+    return;
+  }
+
+  if (pw1 !== pw2) {
+    alert("パスワードが一致しません");
+    return;
+  }
+
+  fetch(`/api/users/${u.id}/reset-password`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ password: pw1 })
+  })
+    .then(res => {
+      if (!res.ok) throw new Error("再設定失敗");
+      closeModal("resetModal");
+      openModal("doneModal"); // 成功モーダル表示
+    })
+    .catch(err => alert(err.message));
+}
+
 // モーダルを閉じる
 function closeModal(id) {
   document.getElementById(id).style.display = 'none';
@@ -147,3 +177,7 @@ function closeModal(id) {
 // ページ読み込み時に一覧を取得
 document.addEventListener("DOMContentLoaded", fetchUsers);
 
+//openModal()を定義する
+function openModal(id) {
+  document.getElementById(id).style.display = 'flex';
+}

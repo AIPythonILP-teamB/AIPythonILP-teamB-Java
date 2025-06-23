@@ -4,6 +4,7 @@ import com.example.hcbar_project.model.User;
 import com.example.hcbar_project.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +13,9 @@ import java.util.Optional;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public List<User> getAllUsers() {
         return userRepository.findByIsActiveTrueOrderByIdAsc();
@@ -27,6 +31,7 @@ public class UserService {
 
     public User saveUser(User user) {
         user.setActive(true);
+        user.setPassword(passwordEncoder.encode(user.getPassword())); //ハッシュ化
         return userRepository.save(user);
     }
 

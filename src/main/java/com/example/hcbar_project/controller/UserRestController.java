@@ -15,7 +15,7 @@ public class UserRestController {
     @Autowired
     private UserService userService;
 
-    /*一覧取得 */
+    /* 一覧取得 */
     @GetMapping
     public List<User> getAllUsers() {
         return userService.getAllUsers();
@@ -39,5 +39,29 @@ public class UserRestController {
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }
-}
 
+    // パスワード再設定
+    @PostMapping("/{id}/reset-password")
+    public String resetPassword(@PathVariable Long id, @RequestBody PasswordDto dto) {
+        return userService.getUserById(id)
+                .map(user -> {
+                    user.setPassword(dto.getPassword()); // パスワード（生）を一旦セット
+                    userService.saveUser(user); // saveUser内でハッシュ化される
+                    return "Password updated";
+                })
+                .orElse("User not found");
+    }
+
+    // パスワードDTO（内部クラス）
+    public static class PasswordDto {
+        private String password;
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+    }
+}
