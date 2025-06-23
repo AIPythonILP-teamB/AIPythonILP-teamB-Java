@@ -49,8 +49,6 @@ function renderProductTable() {
     `;
         tbody.innerHTML += row;
     });
-    // デバッグ用
-    console.log(products);
 }
 
 
@@ -148,7 +146,7 @@ function openAddModal() {
     document.getElementById("addName").value = "";
     document.getElementById("addPrice").value = "";
     document.getElementById("addJan").value = "";
-    document.getElementById("addError").textContent = ""; // エラーリセット
+    document.getElementById("addError").textContent = "";
     document.getElementById("addModal").style.display = "flex";
 }
 
@@ -158,7 +156,7 @@ function openEditModal(index) {
     document.getElementById("editName").value = p.productName;
     document.getElementById("editPrice").value = p.price;
     document.getElementById("editJan").value = p.janCode;
-    document.getElementById("editError").textContent = ""; // エラーリセット
+    document.getElementById("editError").textContent = "";
     document.getElementById("editModal").style.display = "flex";
 }
 

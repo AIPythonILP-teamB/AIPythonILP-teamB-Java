@@ -18,26 +18,26 @@ public class SaleService {
     @Autowired
     private UserRepository userRepository;
 
-    /** 特定日付の既存レコード取得 */
+    /* 特定日付の既存レコード取得 */
     public List<Sale> findByDate(LocalDate date) {
         return null;
     }
 
-    /** 新規登録：List<Sale> を一括保存 */
+    /* 新規登録：List<Sale> を一括保存 */
     public void registerAll(List<Sale> sales) {
         for (Sale sale : sales) {
             sale.setCreatedDate(LocalDateTime.now());
             sale.setUpdatedDate(LocalDateTime.now());
-            sale.setUser(userRepository.findById(1L).orElseThrow()); // 管理者固定
+            sale.setUser(userRepository.findById(1L).orElseThrow()); // 管理者固定 idが1の人だけ
         }
         repo.saveAll(sales);
     }
 
     /** 更新：古いレコードを削除して新しいリストを保存 */
+    // updateAll()の使用場所確認
     public void updateAll(LocalDate date, List<Sale> sales) {
-        // TODO:
-        // List<Sale> old = repo.findBySaleDate(date);
-        // repo.deleteAll(old);
-        // repo.saveAll(sales);
+        List<Sale> old = repo.findBySaleDate(date);
+        repo.deleteAll(old);
+        repo.saveAll(sales);
     }
 }

@@ -12,32 +12,39 @@
   <div class="container">
     <!-- ナビゲーション -->
     <div th:replace="fragments/nav :: sidebar"></div>
-    
+
     <!-- メイン表示 -->
     <div class="main-content" id="mainContent">
       <h1>販売実績入力画面</h1>
 
       <!-- 日付選択 -->
-      <label>日付選択：
-        <input type="date" id="inputDate" required />
-      </label><br><br>
+      <div class="input-block">
+        <label class="form-label">日付選択：
+          <input type="date" id="inputDate" class="form-input" required />
+        </label>
+      </div>
 
       <!-- 商品選択と本数 -->
-      <label>商品名：
-        <select id="productSelect" required>
-          <option value="" disabled selected>選択してください</option>
-          <option th:each="p : ${products}" th:value="${p.id}" th:text="${p.productName}"></option>
-        </select>
-      </label>
+      <div class="input-row">
+        <label class="form-label inline">
+          商品名：
+          <select id="productSelect" class="form-input" required>
+            <option value="" disabled selected>選択してください</option>
+            <option th:each="p : ${products}" th:value="${p.id}" th:text="${p.productName}"></option>
+          </select>
+        </label>
 
-      <label>本数：
-        <input type="number" id="quantityInput" min="1" required />
-      </label>
+        <label class="form-label inline">
+          本数：
+          <input type="number" id="quantityInput" class="form-input" min="1" required />
+        </label>
 
-      <button onclick="addRow()">追加</button>
+        <button class="button confirm" onclick="addRow()">追加</button>
+      </div>
+
 
       <!-- 販売実績テーブル -->
-      <table id="salesTable">
+      <table id="salesTable" class="styled-table">
         <thead>
           <tr>
             <th>商品名</th>
@@ -49,10 +56,12 @@
         </tbody>
       </table>
 
+      <br>
+
       <form id="confirmForm" action="/admin/sale/confirm" method="post">
         <input type="hidden" name="date" id="hiddenDate">
         <input type="hidden" name="salesJson" id="salesJson">
-        <button type="submit">確認画面へ</button>
+        <button class="button confirm" type="submit">確認画面へ</button>
       </form>
     </div>
   </div>

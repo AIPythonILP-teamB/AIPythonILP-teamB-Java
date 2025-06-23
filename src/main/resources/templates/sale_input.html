@@ -1,81 +1,75 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <title>販売実績入力</title>
   <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
   <div class="container">
     <!-- ナビゲーション-->
     <div class="sidebar">
       <p>一般ユーザー：<strong th:text="${name}">[Name]</strong>様</p>
 
-      <button class="nav-button"
-              th:classappend="${activePage == 'sale_input'} ? ' active' : ''"
-              th:onclick="|location.href='@{/sales/input}'|">
+      <button class="nav-button" th:classappend="${activePage == 'sale_input'} ? ' active' : ''"
+        th:onclick="|location.href='@{/sales/input}'|">
         販売実績入力
       </button>
-       <a class="logout-link" href="#" onclick="document.getElementById('logoutForm').submit(); return false;">ログアウト</a>    </div>
+      <a class="logout-link" href="#" onclick="document.getElementById('logoutForm').submit(); return false;">ログアウト</a>
+    </div>
     <form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;"></form>
-    </div>
-
-
-    <div class="main-content" id="mainContent">
-      <h1>販売実績入力画面</h1>
-
-      <!-- 完了メッセージ（リダイレクト ?completed=true を JS で検知） -->
-      <div th:if="${completed}">
-        <p class="done-message">本日の販売実績入力が完了しました。</p>
-      </div>
-
-      <!-- ① 日付表示 -->
-      <p>日付：<span th:text="${saleDate}">--</span></p>
-
-      <!-- ② 行追加フォーム -->
-      <form th:object="${sale}"
-            th:action="@{/sales/add}"
-            method="post">
-        <label>商品：
-          <select th:field="*{product.id}" required>
-            <option value="" disabled selected>選択してください</option>
-            <option th:each="p : ${products}"
-                    th:value="${p.id}"
-                    th:text="${p.name}"></option>
-          </select>
-        </label>
-        <label>本数：
-          <input type="number" th:field="*{quantity}" min="1" required/>
-        </label>
-        <button type="submit">追加</button>
-      </form>
-
-      <!-- ③ 入力中アイテムのテーブル -->
-      <table border="1">
-        <thead>
-          <tr><th>商品</th><th>本数</th><th>操作</th></tr>
-        </thead>
-        <tbody>
-          <tr th:each="s, idx : ${sales}">
-            <td th:text="${s.product.name}">商品名</td>
-            <td th:text="${s.quantity}">0</td>
-            <td>
-              <!-- TODO: 削除機能実装時は /sales/remove/{idx} などにする -->
-              <button disabled>削除</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <!-- ④ 確認へ -->
-      <form th:action="@{/sales/confirm}" method="get">
-        <button type="submit"
-                th:disabled="${#lists.isEmpty(sales)}">
-          確認画面へ
-        </button>
-      </form>
-    </div>
-    <!-- ↑ ここまで main-content -->
   </div>
+
+
+  <div class="main-content" id="mainContent">
+    <h1>販売実績入力画面</h1>
+
+    <!-- 日付選択 -->
+    <label>日付選択：
+      <input type="date" id="inputDate" required />
+    </label><br><br>
+
+    <!-- 商品選択と本数 -->
+    <label>商品名：
+      <select id="productSelect" required>
+        <option value="" disabled selected>選択してください</option>
+        <option th:each="p : ${products}" th:value="${p.id}" th:text="${p.productName}"></option>
+      </select>
+    </label>
+
+    <label>本数：
+      <input type="number" id="quantityInput" min="1" required />
+    </label>
+    <button onclick="addRow()">追加</button>
+
+    <!-- 販売実績テーブル -->
+    <table id="salesTable">
+      <thead>
+        <tr>
+          <th>商品名</th>
+          <th>本数</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- JS で動的に行が追加される -->
+      </tbody>
+    </table>
+
+    <!-- 確認へ -->
+    <form id="confirmForm" action="/sale/confirm" method="post">
+      <input type="hidden" name="date" id="hiddenDate">
+      <input type="hidden" name="salesJson" id="salesJson">
+      <button type="submit">確認画面へ</button>
+    </form>
+  </div>
+  <script>
+    // URLに「completed=true」が含まれていたらアラートを表示
+    if (window.location.search.includes('completed=true')) {
+      alert('販売実績の登録が完了しました');
+    }
+  </script>
 </body>
+
 </html>

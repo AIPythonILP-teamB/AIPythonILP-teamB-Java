@@ -1,9 +1,12 @@
-// 管理者向けの販売実績入力画面
+
+// 一般ユーザ向けの販売実績入力画面：実装途中
 
 package com.example.hcbar_project.controller;
 
+import java.security.Principal;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,30 +16,35 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.hcbar_project.dto.SaleDto;
 import com.example.hcbar_project.model.Sale;
+import com.example.hcbar_project.model.User;
 import com.example.hcbar_project.service.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
-@RequestMapping("/admin/sale")
-@SessionAttributes({ "adminSales", "adminSaleDate" })
-public class AdminSaleController {
+@RequestMapping("/sale")
+@SessionAttributes({ "userSales", "userSaleDate" })
+public class SaleController {
 
     @Autowired
     private SaleService saleService;
+
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private UserService userService;
+
     @Autowired
     private WeatherService weatherService;
 
-    /* 入力画面表示 */
     @GetMapping("/input")
     public String showInput(Model model) {
-        model.addAttribute("adminSaleDate", LocalDate.now());
-        model.addAttribute("adminSales", new ArrayList<Sale>());
+        model.addAttribute("userSaleDate", LocalDate.now());
+        model.addAttribute("userSales", new ArrayList<Sale>());
         model.addAttribute("products", productService.getAllProducts());
-        model.addAttribute("activePage", "admin_sale_input");
-        return "admin_sale_input";
-
+        model.addAttribute("sale", new Sale());
+        model.addAttribute("activePage", "sale_input");
+        return "sale_input";
     }
 
     @PostMapping("/confirm")
@@ -58,12 +66,12 @@ public class AdminSaleController {
                 sales.add(sale);
             }
 
-            model.addAttribute("adminSales", sales);
-            model.addAttribute("adminSaleDate", date);
+            model.addAttribute("userSales", sales);
+            model.addAttribute("userSaleDate", date);
             model.addAttribute("sales", sales);
             model.addAttribute("saleDate", date);
-            model.addAttribute("activePage", "admin_sale_confirm");
-            return "admin_sale_confirm";
+            model.addAttribute("activePage", "sale_confirm");
+            return "sale_confirm";
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,22 +79,29 @@ public class AdminSaleController {
         }
     }
 
-    /* 登録実行 */
+    /* 保存実行 */
     @PostMapping("/save")
-    public String save(@ModelAttribute("adminSales") List<Sale> sales,
-            @ModelAttribute("adminSaleDate") LocalDate date,
+    public String save(
+            @ModelAttribute("userSales") List<Sale> sales,
+            @ModelAttribute("userSaleDate") LocalDate date,
+            Principal principal,
             Model model) {
 
-        for (Sale s : sales) {
-            s.setSaleDate(date);
+        String email = principal.getName();
+        User user = userService.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
+
+        for (Sale sale : sales) {
+            sale.setSaleDate(date);
+            sale.setUser(user);
         }
         saleService.registerAll(sales);
 
-        // ここで天気情報取得＆DB保存（裏処理）
+        // 天気情報の保存（一般ユーザー操作用）
         weatherService.fetchAndSaveWeather(date);
 
-        model.addAttribute("adminSales", new ArrayList<>());
-        model.addAttribute("activePage", "admin_sale_input");
-        return "redirect:/admin/sale/input?completed=true";
+        model.addAttribute("userSales", new ArrayList<>());
+        model.addAttribute("activePage", "sale_input");
+        return "redirect:/sale/input?completed=true";
     }
 }

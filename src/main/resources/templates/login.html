@@ -1,191 +1,195 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org" lang="ja">
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
 <head>
-<meta charset="UTF-8">
-<title>発注予測システム ログイン</title>
-<link rel="stylesheet" th:href="@{/css/login.css}">
+  <meta charset="UTF-8">
+  <title>発注予測システム ログイン</title>
+  <!-- <link rel="stylesheet" th:href="@{/css/login.css}"> -->
+  <script th:src="@{/js/login.js}" defer></script>
 
-<style>
-  /* システム全体のスタイル*/
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  background-color: #f9f9f9; /* 明るめの背景で清潔感 */
-  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-  font-size: 16px;
-  color: #333; /* 読みやすくするために濃いグレー */
-}
+  <style>
+    /* 担当者CSS適用不可のため直書き*/
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background-color: #f9f9f9;
+      font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+      font-size: 16px;
+      color: #333;
+    }
 
- .login-container {
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 30px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
+    .login-container {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
 
-.form-group {
-  margin-bottom: 15px;
-}
+    .form-group {
+      margin-bottom: 15px;
+    }
 
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
 
-input[type="email"],
-input[type="password"] {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
 
-button[type="submit"] {
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-}
+    button[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
 
-/* モーダルウィンドウの基本スタイル */
-/* モーダル全体（背景） */
-.modal {
-  display: none; /* 初期は非表示 */
-  position: fixed;
-  z-index: 1000; /* 他の要素の上に表示 */
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: auto; /* 内容が大きい時にスクロール可能 */
-  background-color: rgba(0, 0, 0, 0.5); /* 半透明の黒背景 */
-}
+    /* モーダルウィンドウの基本スタイル */
+    /* モーダル全体（背景） */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
 
-/* モーダルの中身 */
-.modal-content {
-  background-color: #fff;
-  margin: 10% auto; /* 上から10%、中央寄せ */
-  padding: 30px 20px;
-  border: 1px solid #ccc;
-  width: 90%;
-  max-width: 400px;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-  text-align: center;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-}
+    /* モーダルの中身 */
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      /* 上から10%、中央寄せ */
+      padding: 30px 20px;
+      border: 1px solid #ccc;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+    }
 
-/* モーダル内の見出し */
-.modal-content h2 {
-  margin-top: 0;
-  font-size: 20px;
-  color: #333;
-}
+    /* モーダル内の見出し */
+    .modal-content h2 {
+      margin-top: 0;
+      font-size: 20px;
+      color: #333;
+    }
 
-/* モーダル内の説明文 */
-.modal-content p {
-  font-size: 16px;
-  margin: 20px 0;
-  color: #555;
-  line-height: 1.5;
-}
+    /* モーダル内の説明文 */
+    .modal-content p {
+      font-size: 16px;
+      margin: 20px 0;
+      color: #555;
+      line-height: 1.5;
+    }
 
-/* モーダルの閉じるボタン */
-#closeModal {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-}
+    /* モーダルの閉じるボタン */
+    #closeModal {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
 
-#closeModal:hover {
-  background-color: #0056b3;
-}
-
-</style>
+    #closeModal:hover {
+      background-color: #0056b3;
+    }
+  </style>
 
 
 
 
 </head>
+
 <body>
-<div class="login-container">
- <h2>発注予測システム<br>ログイン</h2>
+  <div class="login-container">
+    <h2>発注予測システム<br>ログイン</h2>
 
- <!-- ★ Thymeleafでサーバーから渡されたメッセージを埋め込む -->
- <p id="errorMessage" th:text="${errorMessage}" style="color: red; display: none;"></p>
+    <!--  Thymeleafでサーバーから渡されたメッセージを埋め込む -->
+    <p id="errorMessage" th:text="${errorMessage}" style="color: red; display: none;"></p>
 
- <form method="post" action="/login">
-  <div class="form-box">
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email"><br>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password"><br>
-      <button type="submit">Log in</button>
+    <form method="post" action="/login">
+      <div class="form-box">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br>
+        <button type="submit">Log in</button>
+      </div>
+    </form>
+
+
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        const errorElement = document.getElementById("errorMessage");
+        if (errorElement.textContent.trim() !== "") {
+          errorElement.style.display = "block";
+        }
+      });
+    </script>
+
+    <p><a href="#" id="forgotPasswordLink">パスワードをお忘れですか？</a></p>
   </div>
- </form>
 
+  <!-- モーダル -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <h2>発注予測システム<br>ログイン</h2>
+      <p>パスワードをお忘れの場合は<br>店長・副店長に確認の上、再発行を行ってください。</p>
+      <button id="closeModal">確認</button>
+    </div>
 
- <script>
-    window.addEventListener("DOMContentLoaded", () => {
-      const errorElement = document.getElementById("errorMessage");
-      if (errorElement.textContent.trim() !== "") {
-        errorElement.style.display = "block";
-      }
-    });
- </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("modal");
+        const openLink = document.getElementById("forgotPasswordLink");
+        const closeBtn = document.getElementById("closeModal");
 
- <p><a href="#" id="forgotPasswordLink">パスワードをお忘れですか？</a></p>
-</div>
+        // リンクがクリックされたときモーダル表示
+        openLink.addEventListener("click", function (event) {
+          event.preventDefault(); // リンクのジャンプを防止
+          modal.style.display = "block";
+        });
 
-<!-- モーダル -->
-<div id="modal" class="modal">
-<div class="modal-content">
-<h2>発注予測システム<br>ログイン</h2>
-<p>パスワードをお忘れの場合は<br>店長・副店長に確認の上、再発行を行ってください。</p>
-<button id="closeModal">確認</button>
-</div>
+        // 閉じるボタンがクリックされたとき非表示
+        closeBtn.addEventListener("click", function () {
+          modal.style.display = "none";
+        });
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-  const modal = document.getElementById("modal");
-  const openLink = document.getElementById("forgotPasswordLink");
-  const closeBtn = document.getElementById("closeModal");
+        // モーダルの外側をクリックしたら閉じる
+        window.addEventListener("click", function (event) {
+          if (event.target === modal) {
+            modal.style.display = "none";
+          }
+        });
+      });
 
-  // リンクがクリックされたときモーダル表示
-  openLink.addEventListener("click", function (event) {
-    event.preventDefault(); // リンクのジャンプを防止
-    modal.style.display = "block";
-  });
+    </script>
 
-  // 閉じるボタンがクリックされたとき非表示
-  closeBtn.addEventListener("click", function () {
-    modal.style.display = "none";
-  });
-
-  // モーダルの外側をクリックしたら閉じる
-  window.addEventListener("click", function (event) {
-    if (event.target === modal) {
-      modal.style.display = "none";
-    }
-  });
-});
-
-</script>
-
-</div>
+  </div>
 
 </body>
+
 </html>

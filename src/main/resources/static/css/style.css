@@ -16,10 +16,9 @@
             display: flex;
             height: 100vh;
             overflow-y: hidden;
-            /* ← はみ出しを防ぐ */
         }
 
-        /* ================[Navigation]=============== */
+        /* ナビゲーションバー */
         .sidebar {
             width: 200px;
             background-color: #a0d3ec;
@@ -97,7 +96,6 @@
 
         .fc-event {
             background-color: transparent !important;
-            /* 背景は透明にする場合 */
             border: none !important;
             font-weight: bold;
         }
@@ -109,7 +107,7 @@
         }
 
 
-        /* ================[modal]=============== */
+        /* modal */
         .modal {
             display: none;
             position: fixed;
@@ -140,7 +138,6 @@
             margin-bottom: 20px;
             font-size: 20px;
             color: #0B3041;
-            border-bottom: 2px solid #a0d3ec;
             padding-bottom: 8px;
             display: block;
         }
@@ -170,13 +167,11 @@
         }
 
 
-
-        /* ================[Product Table]=============== */
+        /* productTable */
         #productTable,
         #userTable {
             width: 100%;
             max-width: 800px;
-            margin: 0 auto;
             border-collapse: collapse;
             table-layout: fixed;
             border: 2px solid #0B3041;
@@ -273,8 +268,9 @@
 
 
 
-        /* ================[modal button]=============== */
-        .modal-button {
+
+        /* モーダル */
+        .button {
             padding: 10px 18px;
             font-size: 16px;
             font-weight: bold;
@@ -283,34 +279,38 @@
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
             margin-right: 10px;
+            text-decoration: none;
+            display: inline-block;
+            text-align:center;
+            line-height: 1.5;
         }
 
-        .modal-button.confirm {
+        .button.confirm {
             background-color: #46B1E1;
             color: white;
         }
 
-        .modal-button.confirm:hover {
+        .button.confirm:hover {
             background-color: #0B3041;
         }
 
-        .modal-button.cancel {
+        .button.cancel {
             background-color: #ffffff;
             color: #0B3041;
             border: 2px solid #46B1E1;
         }
 
-        .modal-button.cancel:hover {
+        .button.cancel:hover {
             background-color: #e0f4ff;
         }
 
-        .modal-button.danger {
+        .button.danger {
             background-color: #ff4d4d;
             border-color: #b30000;
             color: white;
         }
 
-        .modal-button.danger:hover {
+        .button.danger:hover {
             background-color: #b30000;
         }
 
@@ -323,4 +323,92 @@
 
         .logout-link:hover {
             color: #008fbe;
+        }
+
+
+        /* ================[Sales Table]=============== */
+        .styled-table {
+            width: 100%;
+            max-width: 700px;
+            border-collapse: collapse;
+            table-layout: fixed;
+            background-color: #ffffff;
+            border: 2px solid #0B3041;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 50, 0.1);
+            font-size: 17px;
+        }
+
+        .styled-table thead {
+            background-color: #a0d3ec;
+            color: #0B3041;
+        }
+
+        .styled-table th,
+        .styled-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #d3eaf4;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .styled-table tbody tr:nth-child(even) {
+            background-color: #f2faff;
+        }
+
+        .styled-table tbody tr:hover {
+            background-color: #e0f4ff;
+        }
+
+        /* =====================[sale input]===================== */
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #0B3041;
+            padding-bottom: 6px;
+        }
+
+        .form-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #46B1E1;
+            background-color: #f7fbfd;
+            box-sizing: border-box;
+            transition: border 0.3s;
+            margin-top: 6px;
+        }
+
+        .form-input:focus {
+            border-color: #0B3041;
+            outline: none;
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .form-label.inline {
+            display: flex;
+            flex-direction: column;
+            font-size: 16px;
+            font-weight: bold;
+            color: #0B3041;
+        }
+
+        .form-label.inline select,
+        .form-label.inline input {
+            margin-top: 4px;
+            width: 200px;
         }
