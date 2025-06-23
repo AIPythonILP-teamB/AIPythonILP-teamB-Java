@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 img.src = iconUrl;
                 img.style.width = '25px';
                 img.style.display = 'block';
+                img.style.pointerEvents = 'none'; //クリックを通す設定
                 info.el.prepend(img); // イベントセルの先頭に追加
             }
             // 親の日付セルにアクセスして背景色を設定
@@ -32,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (cell) {
                 cell.style.backgroundColor = "rgba(135, 206, 250, 0.2)";
             }
+            info.el.style.pointerEvents = 'none'; //イベント本体にもクリックを通す設定（販売本数などテキストを含む）
         },
 
         // セルクリックで詳細モーダルを開く
