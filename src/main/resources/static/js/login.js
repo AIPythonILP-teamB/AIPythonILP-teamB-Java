@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // リンクがクリックされたときモーダル表示
   openLink.addEventListener("click", function (event) {
     event.preventDefault(); // リンクのジャンプを防止
-    modal.style.display = "block";
+    modal.style.display = "flex";
   });
 
   // 閉じるボタンがクリックされたとき非表示

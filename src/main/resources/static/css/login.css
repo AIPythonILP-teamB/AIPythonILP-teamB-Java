@@ -1,93 +1,173 @@
-.body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: "Helvetica Neue",
-    Arial,
-    "Hiragino Kaku Gothic ProN",
-    "Hiragino Sans",
-    Meiryo,
-    sans-serif;
-  font-size: large;
-  background-color: #a0d3ec;
+/* ================[modal]=============== */
+.modal {
+  display: none;
+  /* 初期状態で非表示 */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
 }
+
+.modal-content {
+  background-color: #ffffff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  max-width: 420px;
+  width: 100%;
+  border: 3px solid #46B1E1;
+  box-shadow: 0 8px 20px rgba(11, 48, 65, 0.25);
+  position: relative;
+  text-align: center;
+}
+
+.modal-content label {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #0B3041;
+  padding-bottom: 8px;
+  display: block;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid #46B1E1;
+  background-color: #f7fbfd;
+  box-sizing: border-box;
+  transition: border 0.3s;
+}
+
+.modal-content input:focus {
+  border-color: #0B3041;
+  outline: none;
+}
+
+.modal-content p[id$="Error"] {
+  color: #d9534f;
+  font-weight: bold;
+  margin-top: 4px;
+  margin-bottom: 10px;
+}
+
+/* ================[button]=============== */
+.button {
+  padding: 10px 18px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 12px;
+  border: 2px solid #0B3041;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  margin-right: 10px;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.button.confirm {
+  background-color: #46B1E1;
+  color: white;
+}
+
+.button.confirm:hover {
+  background-color: #0B3041;
+}
+
+.button.cancel {
+  background-color: #ffffff;
+  color: #0B3041;
+  border: 2px solid #46B1E1;
+}
+
+.button.cancel:hover {
+  background-color: #e0f4ff;
+}
+
+.button.danger {
+  background-color: #ff4d4d;
+  border-color: #b30000;
+  color: white;
+}
+
+.button.danger:hover {
+  background-color: #b30000;
+}
+
+/* ================[全般]=============== */
 
 .login-container {
   max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #bfe4f6;
+  border-radius: 25px;
+  text-align: center;
+}
+
+.login-container p {
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #0a3960;
+}
+
+.form-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  color: #0a3960;
 }
 
 label {
-  display: block;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-right: 10px;
+  flex: 0 0 100px;
+  text-align: right;
 }
 
 input[type="email"],
 input[type="password"] {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
 }
 
 button[type="submit"] {
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
+  margin-top: 10px;
+  background-color: #007bbf;
   color: #fff;
   border: none;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-/* モーダルウィンドウの基本スタイル */
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal-content {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 20px;
-  width: 300px;
-  height: 60px;
-  background-color: #fefefe;
-  border: 1px solid #888;
+  padding: 10px 20px;
   border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
-/* モーダルを閉じるボタン（×）のスタイル */
-#closeModal {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: -30%;
-  right: -10%;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-  color: #FFF;
-  width: 40px;
-  height: 40px;
-  background-color: #333;
-  border: #333;
-  border-radius: 50%;
+#forgotPasswordLink {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: #0a3960;
+  text-decoration: underline;
 }
