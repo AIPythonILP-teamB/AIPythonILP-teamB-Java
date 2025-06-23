@@ -16,9 +16,10 @@
             display: flex;
             height: 100vh;
             overflow-y: hidden;
+            /* ← はみ出しを防ぐ */
         }
 
-        /* ナビゲーションバー */
+        /* ================[Navigation]=============== */
         .sidebar {
             width: 200px;
             background-color: #a0d3ec;
@@ -96,6 +97,7 @@
 
         .fc-event {
             background-color: transparent !important;
+            /* 背景は透明にする場合 */
             border: none !important;
             font-weight: bold;
         }
@@ -107,7 +109,7 @@
         }
 
 
-        /* modal */
+        /* ================[modal]=============== */
         .modal {
             display: none;
             position: fixed;
@@ -167,7 +169,8 @@
         }
 
 
-        /* productTable */
+
+        /* ================[Product&User Table]=============== */
         #productTable,
         #userTable {
             width: 100%;
@@ -268,8 +271,7 @@
 
 
 
-
-        /* モーダル */
+        /* ================[button]=============== */
         .button {
             padding: 10px 18px;
             font-size: 16px;
@@ -314,6 +316,7 @@
             background-color: #b30000;
         }
 
+        /* ================[log out]=============== */
         .logout-link {
             color: #003344;
             text-decoration: underline;
@@ -365,12 +368,19 @@
 
         /* =====================[sale input]===================== */
         .form-label {
-            display: block;
-            margin-bottom: 10px;
             font-size: 18px;
             font-weight: bold;
             color: #0B3041;
-            padding-bottom: 6px;
+            white-space: nowrap;
+            margin: 0;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
         }
 
         .form-input {
@@ -399,20 +409,6 @@
             flex-wrap: wrap;
         }
 
-        .form-label.inline {
-            display: flex;
-            flex-direction: column;
-            font-size: 16px;
-            font-weight: bold;
-            color: #0B3041;
-        }
-
-        .form-label.inline select,
-        .form-label.inline input {
-            margin-top: 4px;
-            width: 200px;
-        }
-
-        #loadingOverlay {
-            text-align: center;
+        #date {
+            width: 180px;
         }
