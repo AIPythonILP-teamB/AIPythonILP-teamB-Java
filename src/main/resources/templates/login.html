@@ -10,7 +10,13 @@
 
 <body>
   <div class="login-container">
-    <h2>発注予測システム<br>ログイン</h2>
+    <div class="img-head-wrapper">
+      <img th:src="@{/img/login-header.jpg}" alt="ログイン画像" class="login-image">
+      <div class="login-title">
+        <div>発注予測システム</div>
+        <div>ログイン</div>
+      </div>
+    </div>
 
     <!--  Thymeleafでサーバーから渡されたメッセージを埋め込む -->
     <p id="errorMessage" th:text="${errorMessage}" style="color: red; display: none;"></p>
