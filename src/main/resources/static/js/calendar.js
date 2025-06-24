@@ -87,6 +87,7 @@ function openDetail(dateStr) {
                 <p><strong>合計販売本数：</strong>${data.totalSales} 本</p>
             `;
 
+
             const tbody = document.getElementById('productSales');
             tbody.innerHTML = Array.isArray(data.productSales)
                 ? data.productSales.map(ps => `<tr><td>${ps.name}</td><td>${ps.quantity}</td></tr>`).join('')

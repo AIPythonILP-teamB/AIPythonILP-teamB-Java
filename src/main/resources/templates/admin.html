@@ -12,13 +12,26 @@
    <div class="container">
       <!-- ナビゲーション -->
       <div th:replace="fragments/nav :: sidebar"></div>
-      
+
       <!-- メイン表示 -->
       <div class="main-content" id="mainContent">
          <h1>ホーム画面</h1>
          <p><strong th:text="${userName}">[Name]</strong>様、発注予測システムへようこそ。</p>
       </div>
    </div>
+   <script>
+      document.addEventListener('DOMContentLoaded', () => {
+         const today = new Date();
+         const day = today.getDay();
+
+         // day == 2 は納品用
+         if (day == 1) {
+            alert("本日は発注日です");
+         } else if (day == 4 || day == 2) {
+            alert("本日は追加発注日です。\n「発注予測」画面の数字と実際の在庫をご確認の上、追加発注を行ってください。");
+         }
+      });
+   </script>
 </body>
 
 </html>

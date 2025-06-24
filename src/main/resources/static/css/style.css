@@ -9,14 +9,13 @@
                 "Hiragino Sans",
                 Meiryo,
                 sans-serif;
-            font-size: large;
+            font-size: medium;
         }
 
         .container {
             display: flex;
             height: 100vh;
             overflow-y: hidden;
-            /* ← はみ出しを防ぐ */
         }
 
         /* ================[Navigation]=============== */
