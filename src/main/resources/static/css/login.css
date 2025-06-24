@@ -171,3 +171,27 @@ button[type="submit"] {
   color: #0a3960;
   text-decoration: underline;
 }
+
+.login-image {
+  width: 100px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px 8px 8px 8px;
+}
+
+/* .img-head-wrapper {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+} */
+
+.login-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #0a3960;
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 10px;
+  margin-bottom: 15px;
+}

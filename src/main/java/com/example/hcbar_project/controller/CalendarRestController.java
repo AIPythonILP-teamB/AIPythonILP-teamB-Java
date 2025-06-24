@@ -20,8 +20,7 @@ public class CalendarRestController {
     @Autowired
     private WeatherRepository weatherRepository;
 
-
-    //  カレンダーに表示するイベント一覧
+    // カレンダーに表示するイベント一覧
     @GetMapping("/events")
     public List<Map<String, Object>> getCalendarEvents(
             @RequestParam String start,
@@ -49,8 +48,7 @@ public class CalendarRestController {
             result.add(Map.of(
                     "title", totalSales + "本",
                     "start", date.toString(),
-                    "icon", w.getIcon()
-            ));
+                    "icon", w.getIcon()));
         }
 
         return result;
@@ -95,6 +93,8 @@ public class CalendarRestController {
                 "minTemp", w.getMinTemp(),
                 "windSpeed", w.getWindSpeed(),
                 "totalSales", total,
-                "productSales", productSales);
+                "productSales", productSales,
+                "icon", w.getIcon()
+        );
     }
 }

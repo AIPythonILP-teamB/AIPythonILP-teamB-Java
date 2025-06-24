@@ -32,7 +32,7 @@
 
         .nav-button {
             /* color: #0B3041; */
-            color:#ffffff;
+            color: #ffffff;
             padding: 10px;
             font-size: larger;
             /* font-weight: bold; */
@@ -431,7 +431,7 @@
             width: 180px;
         }
 
-        /* =====================[Calendar D]===================== */
+        /* =====================[Calendar Details]===================== */
         #detail-area {
             flex: 1;
             padding: 20px 30px;
@@ -440,7 +440,7 @@
             background-color: #ffffff;
             box-shadow: 0 4px 12px rgba(11, 48, 65, 0.15);
             min-width: 300px;
-            max-width:400px;
+            max-width: 400px;
             font-size: 16px;
         }
 
@@ -495,4 +495,14 @@
 
         #detail-area table tbody tr:hover {
             background-color: #e0f4ff;
+        }
+
+        .temp-max {
+            color: rgb(202, 93, 93);
+            font-weight: bold;
+        }
+
+        .temp-min {
+            color: #46B1E1;
+            font-weight: bold;
         }
