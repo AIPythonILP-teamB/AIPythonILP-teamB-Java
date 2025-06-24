@@ -74,6 +74,7 @@
 
         #calendar-area {
             flex: 0 0 700px;
+            max-width: 100%;
         }
 
         .calendar-detail-wrapper {
@@ -496,3 +497,83 @@
         #detail-area table tbody tr:hover {
             background-color: #e0f4ff;
         }
+/* レスポンシブ追加/
+
+/* モバイル用レイアウト切り替え */
+@media screen and (max-width: 768px) {
+  /* 全体を縦並びに */
+  .container {
+    flex-direction: column;
+  }
+  /* サイドバーを横並び＆スクロール */
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    border-radius: 0;
+    padding: 10px;
+  }
+  .sidebar .nav-button {
+    flex: 1 0 auto;
+    width: auto;
+    margin: 0 5px;
+    font-size: 14px;
+  }
+  /* メインコンテンツ幅を100%に */
+  .main-content {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    height: auto;
+  }
+  /* テーブルは横スクロール可能に */
+  #productTable,
+  #userTable,
+  .styled-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  /* テーブルセルは詰めずに横並び */
+  #productTable th,
+  #productTable td,
+  #userTable th,
+  #userTable td,
+  .styled-table th,
+  .styled-table td {
+    white-space: nowrap;
+  }
+  /* フォーム要素・ボタンをタップしやすく */
+  input, select, button {
+    width: 100%;
+    margin-bottom: 12px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  /* モーダルの幅を画面に合わせる */
+  .modal-content {
+    max-width: 90%;
+    margin: 1em auto;
+  }
+
+  .calendar-detail-wrapper {
+        flex-direction: column;
+        gap: 20px;
+        align-items: stretch;
+       
+    }
+
+    #calendar-area {
+        flex: 1 1 auto;
+        width: 100%;
+        max-width: 100%;
+        
+    }
+
+    #detail-area {
+        min-width: auto;
+        width: 100%;
+    }
+   
+}

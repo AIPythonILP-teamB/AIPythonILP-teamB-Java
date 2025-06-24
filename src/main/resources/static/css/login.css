@@ -171,3 +171,41 @@ button[type="submit"] {
   color: #0a3960;
   text-decoration: underline;
 }
+/* ======================[loginページ：レスポンシブ追加]====================== */
+@media screen and (max-width: 768px) {
+  /* ビューポートは既に head に入っている想定 */
+
+  /* ログインフォーム全体を中央寄せ＆幅100% */
+  .login-container {
+    width: 90%;
+    max-width: 400px;
+    margin: 2em auto;
+    padding: 1em;
+    box-sizing: border-box;
+  }
+
+  /* 各フォーム要素をフルワイドに */
+  .login-container input[type="text"],
+  .login-container input[type="password"],
+  .login-container button {
+    width: 100%;
+    margin-bottom: 1em;
+    font-size: 1em;
+    padding: 0.75em;
+  }
+
+  /* ラベルとリンクもタッチしやすく */
+  .login-container label,
+  .login-container .forgot-password {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.5em;
+    text-align: left;
+  }
+
+  /* エラーメッセージ等も見やすく */
+  .login-container .error {
+    font-size: 0.9em;
+    padding: 0.5em;
+  }
+}
