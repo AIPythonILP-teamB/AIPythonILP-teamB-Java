@@ -4,6 +4,7 @@ import com.example.hcbar_project.model.*;
 import com.example.hcbar_project.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -96,5 +97,44 @@ public class CalendarRestController {
                 "productSales", productSales,
                 "icon", w.getIcon()
         );
+    }
+
+    @GetMapping("/sales")
+    public List<Map<String, Object>> getSalesByDate(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+
+        List<Sale> sales = saleRepository.findBySaleDate(date);
+
+        return sales.stream().map(s -> {
+            Map<String, Object> m = new HashMap<>();
+            m.put("id", s.getId());
+            m.put("productName", s.getProduct().getProductName());
+            m.put("productId", s.getProduct().getId());
+            m.put("quantity", s.getQuantity());
+            return m;
+        }).collect(Collectors.toList());
+    }
+
+    @PutMapping("/sale/{id}")
+    public ResponseEntity<?> updateSale(@PathVariable Long id, @RequestBody Map<String, Object> payload) {
+        try {
+            Sale sale = saleRepository.findById(id)
+                    .orElseThrow(() -> new NoSuchElementException("Sale not found for ID: " + id));
+
+            Object rawQuantity = payload.get("quantity");
+            if (rawQuantity == null) {
+                return ResponseEntity.badRequest().body("quantityが指定されていません");
+            }
+
+            int quantity = Integer.parseInt(rawQuantity.toString()); // ← 安全な変換
+            sale.setQuantity(quantity);
+            saleRepository.save(sale);
+
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("更新中にエラーが発生しました: " + e.getMessage());
+        }
+
     }
 }
