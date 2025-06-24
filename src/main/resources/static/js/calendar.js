@@ -53,23 +53,46 @@ function openDetail(dateStr) {
             return res.json();
         })
         .then(data => {
-            // 必須データが存在しない場合は「見つかりません」表示
             if (!data || !data.weatherMain || data.maxTemp == null || data.minTemp == null || data.windSpeed == null) {
                 renderNoData(dateStr);
                 return;
             }
 
-            // 正常に取得できた場合の表示処理
             document.getElementById('modalDate').textContent = `${data.date} の詳細情報`;
-            document.getElementById('weatherIcon').textContent = data.weatherMain;
-            document.getElementById('weatherInfo').textContent = `最高/最低：${data.maxTemp}/${data.minTemp} ℃ 風速：${data.windSpeed} m/s`;
-            document.getElementById('totalSales').textContent = `合計販売本数：${data.totalSales} 本`;
+
+            // アイコン画像を生成して表示
+            const weatherIconDiv = document.getElementById('weatherIcon');
+            weatherIconDiv.innerHTML = '';
+            if (data.icon) {
+                const iconUrl = `https://openweathermap.org/img/wn/${data.icon}@2x.png`;
+                const img = document.createElement('img');
+                img.src = iconUrl;
+                img.alt = data.weatherMain;
+                img.style.width = '50px';
+                weatherIconDiv.appendChild(img);
+            }
+
+            // 補足情報（テキスト）はweatherInfoに表示
+            document.getElementById('weatherInfo').innerHTML = `
+                <p><strong>天気：</strong>${data.weatherMain}</p>
+                <p><strong>気温：</strong>
+                    <span class="temp-max">${data.maxTemp}℃</span> /
+                    <span class="temp-min">${data.minTemp}℃</span>
+                </p>
+                <p><strong>風速：</strong>${data.windSpeed} m/s</p>
+            `;
+
+
+            document.getElementById('totalSales').innerHTML = `
+                <p><strong>合計販売本数：</strong>${data.totalSales} 本</p>
+            `;
 
             const tbody = document.getElementById('productSales');
             tbody.innerHTML = Array.isArray(data.productSales)
                 ? data.productSales.map(ps => `<tr><td>${ps.name}</td><td>${ps.quantity}</td></tr>`).join('')
                 : '';
         })
+
         .catch(error => {
             console.error('エラー:', error);
             renderNoData(dateStr);  // ネットワークやサーバーエラー時も処理
@@ -78,7 +101,7 @@ function openDetail(dateStr) {
 
 function renderNoData(dateStr) {
     document.getElementById('modalDate').textContent = `${dateStr} の詳細情報`;
-    document.getElementById('weatherIcon').textContent = '';
+    document.getElementById('weatherIcon').innerHTML = '';
     document.getElementById('weatherInfo').textContent = 'データが見つかりません。';
     document.getElementById('totalSales').textContent = '';
     const tbody = document.getElementById('productSales');
