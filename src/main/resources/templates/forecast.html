@@ -22,7 +22,7 @@
 
          <select id="date" class="form-input"></select>
          <button class="button confirm" id="fetchForecastBtn">予測表示</button>
-         
+
          <br><br>
 
          <table id="forecastTable" class="styled-table">
@@ -49,6 +49,13 @@
       const tbody = document.querySelector("#forecastTable tbody");
       const fetchButton = document.getElementById("fetchForecastBtn");
       const loading = document.getElementById("loadingOverlay");
+
+      const emptyOption = document.createElement("option");
+      emptyOption.value = "";
+      emptyOption.text = "選択してください";
+      emptyOption.disabled = true;
+      emptyOption.selected = true;
+      select.add(emptyOption);
 
       // 今日から7日間の中から月曜(1)・木曜(4)を選択肢に追加
       const today = new Date();
