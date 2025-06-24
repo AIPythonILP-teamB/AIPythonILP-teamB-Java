@@ -24,7 +24,7 @@ public class SaleService {
 
     /* 特定日付の既存レコード取得 */
     public List<Sale> findByDate(LocalDate date) {
-        return null;
+        return repo.findBySaleDate(date);
     }
 
     /* 新規登録：List<Sale> を一括保存 */
