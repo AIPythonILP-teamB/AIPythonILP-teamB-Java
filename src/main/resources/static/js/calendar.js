@@ -62,7 +62,7 @@ function openDetail(dateStr) {
             // 正常に取得できた場合の表示処理
             document.getElementById('modalDate').textContent = `${data.date} の詳細情報`;
             document.getElementById('weatherIcon').textContent = data.weatherMain;
-            document.getElementById('weatherInfo').textContent = `最高/最低：${data.maxTemp}/${data.minTemp} ℃ 風速：${data.windSpeed} m/s`;
+            document.getElementById('weatherInfo').textContent = `最高/最低：${data.maxTemp}/${data.minTemp} ℃ \n 風速：${data.windSpeed} m/s`;
             document.getElementById('totalSales').textContent = `合計販売本数：${data.totalSales} 本`;
 
             const tbody = document.getElementById('productSales');
