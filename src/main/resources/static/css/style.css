@@ -240,27 +240,27 @@
         /* そのほかのuserTableの横幅調整していません */
 
         #userTable th:nth-child(1) {
-            width: 20%;
+            width: 18%;
         }
 
         #userTable th:nth-child(2) {
-            width: 10%;
+            width: 18%;
         }
 
         #userTable th:nth-child(3) {
-            width: 10%;
+            width: 20%;
         }
 
         #userTable th:nth-child(4) {
-            width: 30%;
+            width: 35%;
         }
 
         #userTable th:nth-child(5) {
-            width: 15%;
+            width: 18%;
         }
 
         #userTable th:nth-child(6) {
-            width: 15%;
+            width: 7%;
         }
 
         #productTable tr:hover,
